@@ -1,42 +1,196 @@
-.search-container {
-  margin-bottom: 20px;
+body {
+  background-color: #3F3F3F;
+}
+
+.top-menu {
+  position: fixed;
   display: flex;
-  align-items: center; /* Align items vertically centered */
-  gap: 10px; /* Space between input and buttons */
+  align-items: center;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100px;
+  color: aliceblue;
+  background: #2c2c2c;
+  z-index: 10;
+}
+
+.top-menu button {
+  cursor: pointer;
+}
+
+.left-menu {
+  position: fixed;
+  top: 2cm;
+  left: 0;
+  height: 100%;
+  width: 5cm;
+  transition: width 0.3s;
+  color: aliceblue;
+  background: #2c2c2c;
+  z-index: 9;
+}
+
+.left-menu.expanded {
+  width: 2cm;
+}
+
+.left-menu button {
+  font-size: 0.7cm;
+  text-decoration: none;
+  color: #FFFFFF;
+  line-height: 2cm;
+  text-align: left;
+  margin-left: 1cm;
+  border: none;
+  cursor: pointer;
+}
+
+.back-button {
+  position: absolute;
+  top: 17px;
+  width: 20px;
+  height: 20px;
+  background: url(https://drive.google.com/thumbnail?id=1Z2U-2QF7rjvLDzHsaqSblG-UI5ga9B1m) no-repeat center center;
+  background-size: 20px 20px;
+  filter: invert(1) brightness(2) contrast(1.2);
+  border: none;
+  cursor: pointer;
+}
+
+.search-container {
+  position: absolute;
+  top: 0.7cm;
+  right: 40vw;
+  width: calc(20vw + 70px);
+  height: 1.5cm;
+  place-content: center;
+  background-color: #00a106;
 }
 
 .search-input {
-  flex: 1; /* Allow input to take up remaining space */
-  padding: 8px;
-  font-size: 1em;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  display: block;
+  margin-left: 1cm;
+  padding: 10px;
+  background-color: #515151;
+  height: 1cm;
+  width: 16vw;
+  border: none;
+  border-radius: 20px;
+  color: white;
+}
+
+.search-input::placeholder {
+  color: rgb(255, 255, 255, 0.5);
+}
+
+.search-input::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+  display: block;
+  content: url(https://drive.google.com/thumbnail?id=1stfwrhxzFJygw5Jrl61iHX077wY21Ei_);
+  width: 20px;
+  height: 20px;
+  margin-right: 0.9cm;
+  cursor: pointer;
 }
 
 .search-button {
-  padding: 8px 16px;
-  font-size: 1em;
-  background-color: #007bff;
-  color: white;
+  position: absolute;
+  left: 15vw;
+  top: 17px;
+  margin-left: 0.45cm;
+  width: 20px;
+  height: 20px;
+  background: url(https://drive.google.com/thumbnail?id=1JZJl6r1pWkegQmTmiuI2Pi0qiDw0SFl9) no-repeat center center;
+  background-size: 20px 20px;
+  filter: invert(1) brightness(2) contrast(1.2);
   border: none;
-  border-radius: 4px;
   cursor: pointer;
 }
 
-.search-button:hover {
-  background-color: #0056b3;
-}
-
-.back-to-booklist-button {
-  padding: 8px 16px;
-  font-size: 1em;
-  background-color: #007bff;
+.filter-button {
+  position: absolute;
+  font-size: 20px;
+  top: 0.5cm;
+  left: 17vw;
+  margin-left: 1cm;
   color: white;
   border: none;
-  border-radius: 4px;
+  background: none;
+  text-decoration: none;
   cursor: pointer;
 }
 
-.back-to-booklist-button:hover {
-  background-color: #0056b3;
+.wishlist-button {
+  position: absolute;
+  font-size: 20px;
+  top: 1cm;
+  right: calc(80px);
+  margin-left: 1cm;
+  color: white;
+  border: none;
+  background: none;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.user-profile-button {
+  position: absolute;
+  border-radius: 50%;
+  width: 1.5cm;
+  height: 1.5cm;
+  top: 0.55cm;
+  right: 0.25cm;
+}
+
+.home-button {
+  display: block;
+  margin-top: 0.5cm;
+  background: none;
+  transition: margin-left 0.3s;
+}
+
+.home-button.expanded {
+  display: block;
+  margin-top: 1cm;
+  margin-left: 0.45cm;
+  width: 40px;
+  height: 40px;
+  background: url(https://drive.google.com/thumbnail?id=1T2u226aa7c6Ts9KVdXOdJFXe9xTf-1jj) no-repeat center center;
+  background-size: 40px 40px;
+  filter: invert(1) brightness(2) contrast(1.2);
+}
+
+.book-button {
+  display: block;
+  background: none;
+  transition: margin-left 0.3s;
+}
+
+.book-button.expanded {
+  display: block;
+  margin-top: 1cm;
+  margin-left: 0.45cm;
+  width: 40px;
+  height: 40px;
+  background: url(https://drive.google.com/thumbnail?id=1B9ab9bJAO_oKmcrmwKM_0sJ0sNYU3JiH) no-repeat center center;
+  background-size: 40px 40px;
+  filter: invert(1) brightness(2) contrast(1.2);
+}
+
+.history-button {
+  display: block;
+  background: none;
+  transition: margin-left 0.3s;
+}
+
+.history-button.expanded {
+  display: block;
+  margin-top: 1cm;
+  margin-left: 0.45cm;
+  width: 40px;
+  height: 40px;
+  background: url(https://drive.google.com/thumbnail?id=1zi84w7npWwx_m_PCbpta3QTEkaJW2KZ9) no-repeat center center;
+  background-size: 40px 40px;
+  filter: invert(1) brightness(2) contrast(1.2);
 }
