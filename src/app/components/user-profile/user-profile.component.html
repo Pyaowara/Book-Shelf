@@ -1,0 +1,7 @@
+<p>user-profile works!</p>
+<div class="contrainer">
+    <img [src]="userData?.user_image" class="image_user"><br>
+    <span class="nameUser">{{userData?.user_name}}</span><br>
+    <span class="desUser">{{userData?.user_descriptions}}</span><br>
+    <button (click)="logout()">Logout</button>
+</div>

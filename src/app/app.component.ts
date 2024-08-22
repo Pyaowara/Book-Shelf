@@ -18,6 +18,7 @@ import { RelatedBooks } from './components/related-books/related-books.component
 })
 export class AppComponent{
   constructor(private router: Router) {}
+  isLeftMenuVisible:boolean = false;
   searchQuery: string = '';
 
     goToBookList(): void {
@@ -34,5 +35,16 @@ export class AppComponent{
     shouldShowControls(): boolean {
       const currentRoute = this.router.url;
       return !currentRoute.includes('/login') && !currentRoute.includes('/register');
+    }
+    goToUserProfile(): void{
+      this.router.navigate(['user-profile/flook']);
+    } 
+    leftMenuToggleButton(): void{
+      if (this.isLeftMenuVisible == true){
+        this.isLeftMenuVisible = false;
+      }
+      else if(this.isLeftMenuVisible == false){
+        this.isLeftMenuVisible = true;
+      }
     }
 }

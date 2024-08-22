@@ -20,7 +20,7 @@ export class UserService{
     try {
       this.token = this.cookieService.get('userToken');
       return await lastValueFrom(
-        this.http.post<UserProfilePesponse>(`http://localhost:8000/getUserProfile`, { token: this.token })
+        this.http.post<UserProfilePesponse>(`https://books-shelves.vercel.app/getUserProfile`, { token: this.token })
       );
     } catch (err) {
       console.log(err);

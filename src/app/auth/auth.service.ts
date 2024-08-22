@@ -65,4 +65,10 @@ export class AuthService {
       return null;
     }
   }
+
+  public async logout(){
+    await this.cookieService.delete('userToken', '/');
+    this.router.navigate(['login']);
+  }
+
 }
