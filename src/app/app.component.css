@@ -65,7 +65,6 @@ body {
   width: calc(20vw + 70px);
   height: 1.5cm;
   place-content: center;
-  background-color: #00a106;
 }
 
 .search-input {
