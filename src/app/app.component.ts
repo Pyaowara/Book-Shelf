@@ -18,7 +18,7 @@ import { RelatedBooks } from './components/related-books/related-books.component
 })
 export class AppComponent{
   constructor(private router: Router) {}
-  isLeftMenuVisible:boolean = false;
+  isLeftMenuIcon:boolean = false;
   searchQuery: string = '';
 
     goToBookList(): void {
@@ -40,11 +40,26 @@ export class AppComponent{
       this.router.navigate(['user-profile/flook']);
     } 
     leftMenuToggleButton(): void{
-      if (this.isLeftMenuVisible == true){
-        this.isLeftMenuVisible = false;
+      const toggleButton = document.getElementById("leftMenuToggleButton") as HTMLButtonElement;
+      const menu = document.getElementById("left-menu") as HTMLElement;
+      const homeButton = document.getElementById("home-button") as HTMLButtonElement;
+      const bookButton = document.getElementById("book-button") as HTMLButtonElement;
+      const historyButton = document.getElementById("history-button") as HTMLButtonElement;
+  
+      menu.classList.toggle("expanded");
+      homeButton.classList.toggle("expanded");
+      bookButton.classList.toggle("expanded");
+      historyButton.classList.toggle("expanded");
+      
+      if (isLeftMenuIcon) {
+          homeButton.innerText = "Home";
+          bookButton.innerText = "Books";
+          historyButton.innerText = "History";
+      } else {
+          homeButton.innerText = "";
+          bookButton.innerText = "";
+          historyButton.innerText = "";
       }
-      else if(this.isLeftMenuVisible == false){
-        this.isLeftMenuVisible = true;
-      }
+      isLeftMenuIcon = !isLeftMenuIcon;
     }
 }
