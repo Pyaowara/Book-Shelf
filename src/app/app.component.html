@@ -8,18 +8,20 @@
       </div>
     </div>
     <div class="top-menu">
-      <button (click)="leftMenuToggleButton()" id="leftMenuToggleButton" style="cursor:pointer; background:none; color:white; font-size:1cm; margin-left:0.35cm; border:none;">
+      <button (click)="leftMenuToggleButton()" id="leftMenuToggleButton" class="menu-toggle-button">
         ☰
       </button>
       <div class="search-container">
         <button (click)="goToAllBooks()" class="back-button"></button>
         <input type="search" [(ngModel)]="searchQuery" placeholder="Search for a book..." id="search-input" class="search-input"/>
-        <button (click)="searchBooks()" class="search-button"></button>
+        <button (click)="searchBooks()" class="search-button">Search</button>
         <button (click)="goToAllBooks()" class="filter-button">Filter</button>
       </div>
-      <button (click)="goToAllBooks()" class="wishlist-button">Wishlist</button>
-      <button (click)="goToUserProfile()" class="user-profile-button">User</button>
+      <div class="nav-buttons">
+        <button (click)="goToAllBooks()" class="wishlist-button">Wishlist</button>
+        <button (click)="goToUserProfile()" class="user-profile-button">User</button>
+      </div>
     </div>
   </div>
+  <router-outlet></router-outlet>
 </body>
-<router-outlet></router-outlet>

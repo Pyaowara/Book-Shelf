@@ -1,195 +1,145 @@
 body {
   background-color: #3F3F3F;
+  margin: 0;
+  font-family: Arial, sans-serif;
 }
 
 .top-menu {
   position: fixed;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   top: 0;
   left: 0;
   width: 100%;
-  height: 100px;
+  height: 70px;
   color: aliceblue;
   background: #2c2c2c;
   z-index: 10;
+  padding: 0 20px; /* Adjusted padding */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
 }
 
-.top-menu button {
+.search-container {
+  display: flex;
+  align-items: center;
+  background-color: #444444;
+  border-radius: 25px;
+  padding: 5px 10px;
+  max-width: 500px;
+  flex: 1;
+  margin: 0 auto; /* Center the search container */
+}
+
+.search-input {
+  border: none;
+  border-radius: 20px;
+  padding: 10px;
+  width: 100%;
+  background-color: #515151;
+  color: white;
+  font-size: 0.9rem;
+}
+
+button {
+  background: none;
+  border: none;
   cursor: pointer;
+}
+
+.nav-buttons {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Space between buttons */
+}
+
+.wishlist-button,
+.user-profile-button {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  color: white;
+  font-size: 1.2rem;
+}
+
+.wishlist-button {
+  background-color: #ffbb00;
+}
+
+.user-profile-button {
+  background-color: #ff6600;
+}
+
+.menu-toggle-button {
+  cursor: pointer;
+  background: none;
+  color: white;
+  font-size: 1.2rem;
+  border: none;
 }
 
 .left-menu {
   position: fixed;
-  top: 2cm;
+  top: 70px;
   left: 0;
-  height: 100%;
-  width: 5cm;
-  transition: width 0.3s;
-  color: aliceblue;
+  height: calc(100% - 70px);
+  width: 70px;
   background: #2c2c2c;
+  color: aliceblue;
   z-index: 9;
+  transition: width 0.3s ease;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
 }
 
 .left-menu.expanded {
-  width: 2cm;
+  width: 200px;
 }
 
 .left-menu button {
-  font-size: 0.7cm;
-  text-decoration: none;
-  color: #FFFFFF;
-  line-height: 2cm;
+  font-size: 0.9rem;
   text-align: left;
-  margin-left: 1cm;
-  border: none;
-  cursor: pointer;
-}
-
-.back-button {
-  position: absolute;
-  top: 17px;
-  width: 20px;
-  height: 20px;
-  background: url(https://drive.google.com/thumbnail?id=1Z2U-2QF7rjvLDzHsaqSblG-UI5ga9B1m) no-repeat center center;
-  background-size: 20px 20px;
-  filter: invert(1) brightness(2) contrast(1.2);
-  border: none;
-  cursor: pointer;
-}
-
-.search-container {
-  position: absolute;
-  top: 0.7cm;
-  right: 40vw;
-  width: calc(20vw + 70px);
-  height: 1.5cm;
-  place-content: center;
-}
-
-.search-input {
-  display: block;
-  margin-left: 1cm;
   padding: 10px;
-  background-color: #515151;
-  height: 1cm;
-  width: 16vw;
+  margin: 5px 0;
+  color: #FFFFFF;
+  background: #3b3b3b;
   border: none;
-  border-radius: 20px;
-  color: white;
-}
-
-.search-input::placeholder {
-  color: rgb(255, 255, 255, 0.5);
-}
-
-.search-input::-webkit-search-cancel-button {
-  -webkit-appearance: none;
-  display: block;
-  content: url(https://drive.google.com/thumbnail?id=1stfwrhxzFJygw5Jrl61iHX077wY21Ei_);
-  width: 20px;
-  height: 20px;
-  margin-right: 0.9cm;
-  cursor: pointer;
+  border-radius: 5px;
+  transition: background 0.3s ease;
 }
 
 .search-button {
-  position: absolute;
-  left: 15vw;
-  top: 17px;
-  margin-left: 0.45cm;
-  width: 20px;
-  height: 20px;
-  background: url(https://drive.google.com/thumbnail?id=1JZJl6r1pWkegQmTmiuI2Pi0qiDw0SFl9) no-repeat center center;
-  background-size: 20px 20px;
-  filter: invert(1) brightness(2) contrast(1.2);
+  background-color: #ff6600;
   border: none;
+  color: white;
+  border-radius: 25px;
+  padding: 10px 20px;
+  margin-left: 10px;
+  font-size: 0.9rem;
+  transition: background-color 0.3s ease;
   cursor: pointer;
+}
+
+.search-button:hover {
+  background-color: #e65c00;
 }
 
 .filter-button {
-  position: absolute;
-  font-size: 20px;
-  top: 0.5cm;
-  left: 17vw;
-  margin-left: 1cm;
-  color: white;
+  background-color: #515151;
   border: none;
-  background: none;
-  text-decoration: none;
+  color: white;
+  border-radius: 25px;
+  padding: 10px 20px;
+  margin-left: 10px;
+  font-size: 0.9rem;
+  transition: background-color 0.3s ease;
   cursor: pointer;
 }
 
-.wishlist-button {
-  position: absolute;
-  font-size: 20px;
-  top: 1cm;
-  right: calc(80px);
-  margin-left: 1cm;
-  color: white;
-  border: none;
-  background: none;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-.user-profile-button {
-  position: absolute;
-  border-radius: 50%;
-  width: 1.5cm;
-  height: 1.5cm;
-  top: 0.55cm;
-  right: 0.25cm;
-}
-
-.home-button {
-  display: block;
-  margin-top: 0.5cm;
-  background: none;
-  transition: margin-left 0.3s;
-}
-
-.home-button.expanded {
-  display: block;
-  margin-top: 1cm;
-  margin-left: 0.45cm;
-  width: 40px;
-  height: 40px;
-  background: url(https://drive.google.com/thumbnail?id=1T2u226aa7c6Ts9KVdXOdJFXe9xTf-1jj) no-repeat center center;
-  background-size: 40px 40px;
-  filter: invert(1) brightness(2) contrast(1.2);
-}
-
-.book-button {
-  display: block;
-  background: none;
-  transition: margin-left 0.3s;
-}
-
-.book-button.expanded {
-  display: block;
-  margin-top: 1cm;
-  margin-left: 0.45cm;
-  width: 40px;
-  height: 40px;
-  background: url(https://drive.google.com/thumbnail?id=1B9ab9bJAO_oKmcrmwKM_0sJ0sNYU3JiH) no-repeat center center;
-  background-size: 40px 40px;
-  filter: invert(1) brightness(2) contrast(1.2);
-}
-
-.history-button {
-  display: block;
-  background: none;
-  transition: margin-left 0.3s;
-}
-
-.history-button.expanded {
-  display: block;
-  margin-top: 1cm;
-  margin-left: 0.45cm;
-  width: 40px;
-  height: 40px;
-  background: url(https://drive.google.com/thumbnail?id=1zi84w7npWwx_m_PCbpta3QTEkaJW2KZ9) no-repeat center center;
-  background-size: 40px 40px;
-  filter: invert(1) brightness(2) contrast(1.2);
+.filter-button:hover {
+  background-color: #3f3f3f;
 }
