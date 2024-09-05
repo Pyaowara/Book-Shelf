@@ -10,6 +10,7 @@ import { SearchedBookComponent } from './app/components/searched-book/searched-b
 import { AllBooksComponent } from './app/components/all-books/all-books.component';
 import { RelatedBooks } from './app/components/related-books/related-books.component';
 import { UserProfileComponent } from './app/components/user-profile/user-profile.component';
+import { UserSettingComponent } from './app/components/user-setting/user-setting.component';
 import { authGuard } from './app/auth/guard/auth.guard';
 
 
@@ -22,7 +23,8 @@ export const routes: Routes = [
   { path: 'register', component: RegisterComponent},
   { path: 'searched-book', component: SearchedBookComponent, canActivate:  [authGuard] },
   { path: 'all-books', component: AllBooksComponent ,canActivate:  [authGuard]},
-  { path: 'user-profile/:id', component:UserProfileComponent, canActivate: [authGuard]}
+  { path: 'user-profile/:id', component:UserProfileComponent, canActivate: [authGuard]},
+  { path: 'user-setting', component:UserSettingComponent, canActivate: [authGuard] }
 ];
 
 bootstrapApplication(AppComponent, {

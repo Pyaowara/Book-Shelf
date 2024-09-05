@@ -2,33 +2,55 @@ import { Component, OnInit } from '@angular/core';
 import { UserProfilePesponse } from '../../services/user_service/user.respones.interface';
 import { UserService } from '../../services/user_service/user.service';
 import { AuthService } from '../../auth/auth.service';
+import { CommonModule } from '@angular/common';
+import { ActivatedRoute} from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-user-profile',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './user-profile.component.html',
   styleUrl: './user-profile.component.scss'
 })
 export class UserProfileComponent implements OnInit{
-  constructor(private userService:UserService,
-              private authService:AuthService
+  constructor(private route:ActivatedRoute,
+              private authService:AuthService,
+              private userService:UserService,
+              private cookieService: CookieService
   ){}
+
+  public isOwnerAccount:boolean = false;
 
   public userData:UserProfilePesponse | null = null;
 
   async ngOnInit(){
-      let res = await this.userService.getData();
-      this.userData = res;
-      
+    this.route.paramMap.subscribe(async params => {
+      const userName = params.get('id');
+      if (userName) {
+        this.userData = await this.userService.getDataByParam(userName);
+        this.checkPermissionSetting(userName);
+      }
+    });
   }
 
   public logout():void{
     this.authService.logout();
   }
 
-  
-  
+  public async checkPermissionSetting(userName:string|null){
+    let token = await this.cookieService.get('userToken');
+    if(token.length > 0){
+      let res = await this.authService.validateToken(token)
+      if(res?.valid == true && res?.name == userName){
+        this.isOwnerAccount = true;
+      }
+    }
+  }
+
+  public setting():void{
+
+  }
 
 }
 

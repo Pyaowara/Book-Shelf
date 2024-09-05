@@ -27,6 +27,17 @@ export class UserService{
       return null;
     }
   }
+
+  public async getDataByParam(userName:string|null){
+    try {
+      return await lastValueFrom(
+        this.http.get<UserProfilePesponse>(`https://books-shelves.vercel.app/getUserProfile/`+userName)
+      );
+    } catch (err) {
+      console.log(err);
+      return null;
+    }
+  }
 }
 
   

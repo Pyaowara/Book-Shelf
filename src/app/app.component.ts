@@ -1,4 +1,4 @@
-import { Component} from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterOutlet } from '@angular/router';
 import { BookListComponent } from './components/book-list/book-list.component';
@@ -8,6 +8,8 @@ import { BookDetailComponent } from './components/book-detail/book-detail.compon
 import { FormsModule } from '@angular/forms';
 import { AllBooksComponent } from './components/all-books/all-books.component';
 import { RelatedBooks } from './components/related-books/related-books.component';
+import { UserService } from './services/user_service/user.service';
+import { UserProfilePesponse } from './services/user_service/user.respones.interface';
 
 @Component({
   selector: 'app-root',
@@ -16,29 +18,45 @@ import { RelatedBooks } from './components/related-books/related-books.component
   styleUrls: ['./app.component.css'],
   imports: [RouterOutlet, BookListComponent, LoginComponent, RegisterComponent, BookDetailComponent, FormsModule, CommonModule, AllBooksComponent, RelatedBooks]
 })
-export class AppComponent{
-  constructor(private router: Router) {}
+export class AppComponent implements OnInit{
+
+  constructor(private router: Router,
+              private userService:UserService
+  ) {}
+
+  public userData:UserProfilePesponse | null = null;
+
+  async ngOnInit(){
+    let res = await this.userService.getData();
+    this.userData = res;
+  }
+
   isLeftMenuVisible:boolean = false;
   searchQuery: string = '';
 
     goToBookList(): void {
       this.router.navigate(['booklist/:id']);
     }
+
     goToAllBooks(): void {
       this.router.navigate(['/all-books']);
     }
+
     searchBooks() {
       if (this.searchQuery.trim()) {
         this.router.navigate(['/searched-book'], { queryParams: { query: this.searchQuery } });
       }
     }
+
     shouldShowControls(): boolean {
       const currentRoute = this.router.url;
       return !currentRoute.includes('/login') && !currentRoute.includes('/register');
     }
-    goToUserProfile(): void{
-      this.router.navigate(['user-profile/flook']);
-    } 
+
+    goToUserProfile(): void {
+      this.router.navigate(['user-profile', this.userData?.user_name])
+    }
+
     leftMenuToggleButton(): void{
       if (this.isLeftMenuVisible == true){
         this.isLeftMenuVisible = false;
