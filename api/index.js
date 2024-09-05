@@ -275,4 +275,33 @@ app.post('/validate-token', async (req, res) => {
   }
 });
 
+app.get('/getUserProfile/:id', async(req, res) => {
+  const user_name = req.params.id;
+
+  let conn;
+
+  if (!user_name) {
+    return res.status(400).send('Username is required');
+  }
+
+  try {
+    conn = await pool.getConnection();
+
+    const [rows] = await conn.query('SELECT * FROM user WHERE user_name = ?', [user_name]);
+
+    if (rows.length === 0) {
+      return res.status(404).send('User not found');
+    }
+
+    res.json(rows[0]);
+  } catch (err) {
+    console.error('Database error:', err);
+    res.status(500).send(err.message);
+  } finally {
+    if (conn) {
+      conn.release();
+    }
+  }
+});
+
 module.exports = app;
