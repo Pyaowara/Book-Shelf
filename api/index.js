@@ -305,10 +305,10 @@ app.get('/getUserProfile/:id', async(req, res) => {
 });
 
 app.post('/change/user', async (req, res) => {
-  const { old_userName, user_name, user_pass, old_userPass, user_email, user_phone } = req.body;
+  const { user_id, user_name, user_pass, old_userPass, user_email, user_phone } = req.body;
   let conn;
 
-  if (!user_name || !user_pass || !user_email || !user_phone || !old_userName || !old_userPass) {
+  if (!user_name || !user_pass || !user_email || !user_phone || !user_id || !old_userPass) {
     return res.status(400).json({
       message: 'Information are required',
     });
@@ -316,7 +316,7 @@ app.post('/change/user', async (req, res) => {
   try {
     conn = await pool.getConnection();
 
-    const [users] = await conn.query('SELECT * FROM user WHERE user_name = ? OR user_email = ?', [old_userName, old_userName]);
+    const [users] = await conn.query('SELECT * FROM user WHERE user_id', [user_id]);
     if (users.length === 0) {
       return res.status(404).json({
         message: 'User not found',
@@ -327,8 +327,8 @@ app.post('/change/user', async (req, res) => {
 
     if (match) {
       const [existingUsers] = await conn.query(
-        'SELECT * FROM user WHERE (user_name = ? OR user_email = ?) AND user_name != ?',
-        [user_name, user_email, old_userName]
+        'SELECT * FROM user WHERE (user_name = ? OR user_email = ?) AND (user_name != ? OR user_email != ?)',
+        [user_name, user_email, userData.user_name, userData.user_email]
       );
       if (existingUsers.length > 0) {
         return res.status(409).json({
@@ -336,9 +336,9 @@ app.post('/change/user', async (req, res) => {
         });
       }
 
-      const queryChange = 'UPDATE user SET user_name = ?, user_pass = ?, user_email = ?, user_phone = ? WHERE user_name = ?';
+      const queryChange = 'UPDATE user SET user_name = ?, user_pass = ?, user_email = ?, user_phone = ? WHERE user_id = ?';
       const passwordHash = await bcrypt.hash(user_pass, 8);
-      await conn.query(queryChange, [user_name, passwordHash, user_email, user_phone, old_userName]);
+      await conn.query(queryChange, [user_name, passwordHash, user_email, user_phone, user_id]);
 
       const token = jwt.sign(
         {
