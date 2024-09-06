@@ -316,7 +316,7 @@ app.post('/change/user', async (req, res) => {
   try {
     conn = await pool.getConnection();
 
-    const [users] = await conn.query('SELECT * FROM user WHERE user_id', [user_id]);
+    const [users] = await conn.query('SELECT * FROM user WHERE user_id = ?', [user_id]);
     if (users.length === 0) {
       return res.status(404).json({
         message: 'User not found',
