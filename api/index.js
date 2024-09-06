@@ -346,7 +346,7 @@ app.post('/change/user', async (req, res) => {
           user_name: user_name,
           user_permission: userData.user_permission,
         },
-        process.env.JWT_SECRET || 'itkmitl',
+        'itkmitl',
         { expiresIn: '30d' }
       );
 
