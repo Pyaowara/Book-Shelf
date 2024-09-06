@@ -304,4 +304,69 @@ app.get('/getUserProfile/:id', async(req, res) => {
   }
 });
 
+app.post('/change/user', async (req, res) => {
+  const { old_userName, user_name, user_pass, old_userPass, user_email, user_phone } = req.body;
+  let conn;
+
+  if (!user_name || !user_pass || !user_email || !user_phone || !old_userName || !old_userPass) {
+    return res.status(400).json({
+      message: 'Information are required',
+    });
+  }
+  try {
+    conn = await pool.getConnection();
+
+    const [users] = await conn.query('SELECT * FROM user WHERE user_name = ? OR user_email = ?', [old_userName, old_userName]);
+    if (users.length === 0) {
+      return res.status(404).json({
+        message: 'User not found',
+      });
+    }
+    const userData = users[0];
+    const match = await bcrypt.compare(old_userPass, userData.user_pass);
+
+    if (match) {
+      const [existingUsers] = await conn.query(
+        'SELECT * FROM user WHERE (user_name = ? OR user_email = ?) AND user_name != ?',
+        [user_name, user_email, old_userName]
+      );
+      if (existingUsers.length > 0) {
+        return res.status(409).json({
+          message: 'Username or email already in use',
+        });
+      }
+
+      const queryChange = 'UPDATE user SET user_name = ?, user_pass = ?, user_email = ?, user_phone = ? WHERE user_name = ?';
+      const passwordHash = await bcrypt.hash(user_pass, 8);
+      await conn.query(queryChange, [user_name, passwordHash, user_email, user_phone, old_userName]);
+
+      const token = jwt.sign(
+        {
+          user_id: userData.user_id,
+          user_name: user_name,
+          user_permission: userData.user_permission,
+        },
+        process.env.JWT_SECRET || 'itkmitl',
+        { expiresIn: '30d' }
+      );
+
+      res.status(200).json({
+        message: 'User information updated successfully',
+        userToken: token,
+        name_user: user_name,
+      });
+    } else {
+      res.status(401).json({
+        message: 'Invalid password',
+      });
+    }
+  } catch (err) {
+    console.error('Database error:', err);
+    res.status(500).send(err.message);
+  } finally {
+    if (conn) {
+      conn.release();
+    }
+  }
+});
 module.exports = app;
