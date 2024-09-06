@@ -25,7 +25,7 @@ export class AuthService {
       map(response => {
         if (response.message === 'Login successful') {
           this.cookieService.set('userToken', response.userToken, 30, '/');
-          this.router.navigate(['booklist/'+ response.name_user]);
+          this.router.navigate(['booklist']);
           return 'Login successful';
         } else {
           return 'Invalid username or password';

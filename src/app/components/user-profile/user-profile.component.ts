@@ -26,16 +26,17 @@ export class UserProfileComponent implements OnInit{
 
   async ngOnInit(){
     this.route.paramMap.subscribe(async params => {
-      const userName = params.get('id');
+      const userName = await params.get('id');
+      console.log(userName);
       if (userName) {
         this.userData = await this.userService.getDataByParam(userName);
-        this.checkPermissionSetting(userName);
+        await this.checkPermissionSetting(userName);
       }
     });
   }
 
-  public logout():void{
-    this.authService.logout();
+  public async logout(){
+    await this.authService.logout();
   }
 
   public async checkPermissionSetting(userName:string|null){

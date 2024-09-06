@@ -11,15 +11,16 @@ import { AllBooksComponent } from './app/components/all-books/all-books.componen
 import { RelatedBooks } from './app/components/related-books/related-books.component';
 import { UserProfileComponent } from './app/components/user-profile/user-profile.component';
 import { UserSettingComponent } from './app/components/user-setting/user-setting.component';
-import { authGuard } from './app/auth/guard/auth.guard';
+import { authGuard } from './app/auth/guard/auth/auth.guard';
+import { initGuard } from './app/auth/guard/init/init.guard';
 
 
 export const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
-  { path: 'booklist/:id', component: BookListComponent, canActivate:  [authGuard] },
+  { path: 'booklist', component: BookListComponent, canActivate:  [authGuard]},
   { path: 'book/:id', component: BookDetailComponent, canActivate:  [authGuard] },
   { path: 'series/:id', component: RelatedBooks, canActivate:  [authGuard] },
-  { path: 'login', component: LoginComponent},
+  { path: 'login', component: LoginComponent, canActivate: [initGuard]},
   { path: 'register', component: RegisterComponent},
   { path: 'searched-book', component: SearchedBookComponent, canActivate:  [authGuard] },
   { path: 'all-books', component: AllBooksComponent ,canActivate:  [authGuard]},

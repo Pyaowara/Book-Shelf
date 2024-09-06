@@ -1,4 +1,4 @@
-import { Component, OnInit} from '@angular/core';
+import { Component} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterOutlet } from '@angular/router';
 import { BookListComponent } from './components/book-list/book-list.component';
@@ -18,7 +18,7 @@ import { UserProfilePesponse } from './services/user_service/user.respones.inter
   styleUrls: ['./app.component.css'],
   imports: [RouterOutlet, BookListComponent, LoginComponent, RegisterComponent, BookDetailComponent, FormsModule, CommonModule, AllBooksComponent, RelatedBooks]
 })
-export class AppComponent implements OnInit{
+export class AppComponent{
 
   constructor(private router: Router,
               private userService:UserService
@@ -26,16 +26,11 @@ export class AppComponent implements OnInit{
 
   public userData:UserProfilePesponse | null = null;
 
-  async ngOnInit(){
-    let res = await this.userService.getData();
-    this.userData = res;
-  }
-
   isLeftMenuVisible:boolean = false;
   searchQuery: string = '';
 
     goToBookList(): void {
-      this.router.navigate(['booklist/:id']);
+      this.router.navigate(['booklist']);
     }
 
     goToAllBooks(): void {
@@ -53,8 +48,9 @@ export class AppComponent implements OnInit{
       return !currentRoute.includes('/login') && !currentRoute.includes('/register');
     }
 
-    goToUserProfile(): void {
-      this.router.navigate(['user-profile', this.userData?.user_name])
+    async goToUserProfile() {
+        await this.loadDataUser();
+        this.router.navigate(['user-profile', this.userData?.user_name]);
     }
 
     leftMenuToggleButton(): void{
@@ -64,5 +60,9 @@ export class AppComponent implements OnInit{
       else if(this.isLeftMenuVisible == false){
         this.isLeftMenuVisible = true;
       }
+    }
+
+    async loadDataUser(){
+      this.userData = await this.userService.getData();
     }
 }
