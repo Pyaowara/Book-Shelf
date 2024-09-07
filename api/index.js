@@ -306,7 +306,7 @@ app.get('/getUserProfile/:id', async(req, res) => {
 
 app.post('/change/:id', async (req, res) => {
   const id = req.params.id;
-  const {user_id, data, password} = req.body;
+  let {user_id, data, password} = req.body;
   let conn;
 
   if (!data || !password || !user_id) {
