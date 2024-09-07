@@ -353,6 +353,8 @@ app.post('/change/:id', async (req, res) => {
     } else {
       res.status(401).json({
         message: 'Invalid password',
+        userToken: '',
+        name_user: '',
       });
     }
   } catch (err) {
