@@ -48,7 +48,7 @@ export class UserService{
         )
       );
     } catch (err: any) {
-      let errorMessage = 'An unknown error occurred';
+      let errorMessage = 'Please fill out all the fields';
       if (err.status === 409) {
         errorMessage = 'Username already exists';
       }
@@ -65,7 +65,7 @@ export class UserService{
         this.http.post<{message:string, userToken:string}>(`https://books-shelves.vercel.app/change/user_email`, {user_id:userId, data:userEmail, password:password})
       );
     } catch (err:any) {
-      let errorMessage = 'An unknown error occurred';
+      let errorMessage = 'Please fill out all the fields';
       if (err.status === 409) {
         errorMessage = 'Email already exists';
       }
@@ -82,7 +82,7 @@ export class UserService{
         this.http.post<{message:string, userToken:string}>(`https://books-shelves.vercel.app/change/user_pass`, {user_id:userId, data:userPassword, password:password})
       );
     } catch (err:any) {
-      let errorMessage = 'An unknown error occurred';
+      let errorMessage = 'Please fill out all the fields';
       if (err.status === 401) {
         errorMessage = 'Invalid password';
       }
@@ -96,7 +96,7 @@ export class UserService{
         this.http.post<{message:string, userToken:string}>(`https://books-shelves.vercel.app/change/user_phone`, {user_id:userId, data:userPhone, password:password})
       );
     } catch (err:any) {
-      let errorMessage = 'An unknown error occurred';
+      let errorMessage = 'Please fill out all the fields';
       if (err.status === 401) {
         errorMessage = 'Invalid password';
       }

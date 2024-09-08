@@ -31,8 +31,8 @@ export class ReemailComponent implements OnInit{
   async update(){
     try{
       let res = await this.userService.changeEmail(this.userData!.user_id, this.newEmail, this.confrimePass);
-      this.cookieService.set('userToken', res!.userToken, 30, '/');
-      this.message =  res?.message;
+      await this.cookieService.set('userToken', res!.userToken, 30, '/');
+      this.message =  await res?.message;
     }
     catch(err:any){
       this.message = err.message;

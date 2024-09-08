@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { UserService } from '../../../services/user_service/user.service';
@@ -31,8 +31,8 @@ export class RenameComponent implements OnInit{
   async update() {
     try {
       let res = await this.userService.changeName(this.userData!.user_id, this.newname, this.confrimePass);
-      this.cookieService.set('userToken', res!.userToken, 30, '/');
-      this.message = res?.message;
+      await this.cookieService.set('userToken', res!.userToken, 30, '/');
+      this.message = await res?.message;
     } catch (err: any) {
       console.log('Error:', err);
       this.message = err.message;

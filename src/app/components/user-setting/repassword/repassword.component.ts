@@ -33,8 +33,8 @@ export class RepasswordComponent implements OnInit{
     if(this.newPassword == this.confrimeNewPassword){
       try{
         let res = await this.userService.changePassword(this.userData!.user_id, this.newPassword, this.confrimePass);
-        this.cookieService.set('userToken', res!.userToken, 30, '/');
-        this.message =  res?.message;
+        await this.cookieService.set('userToken', res!.userToken, 30, '/');
+        this.message =  await res?.message;
       }
       catch(err:any){
         console.log('Error:', err);
