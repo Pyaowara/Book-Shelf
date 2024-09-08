@@ -327,6 +327,17 @@ app.post('/change/:id', async (req, res) => {
     const match = await bcrypt.compare(password, userData.user_pass);
 
     if (match) {
+      if (id === 'user_name' || id === 'user_email') {
+        let column = id === 'user_name' ? 'user_name' : 'user_email';
+        let [existingUsers] = await conn.query(`SELECT * FROM user WHERE ${column} = ?`, [data]);
+
+        if (existingUsers.length > 0) {
+          return res.status(409).json({
+            message: `${column === 'user_name' ? 'Username' : 'Email'} already exists`,
+          });
+        }
+      }
+
       const queryChange = 'UPDATE user SET ?? = ? WHERE user_id = ?';
       if(id == 'user_pass'){
         data = await bcrypt.hash(data, 8);
@@ -366,4 +377,5 @@ app.post('/change/:id', async (req, res) => {
     }
   }
 });
+
 module.exports = app;
