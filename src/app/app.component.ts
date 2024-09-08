@@ -9,7 +9,7 @@ import { FormsModule } from '@angular/forms';
 import { AllBooksComponent } from './components/all-books/all-books.component';
 import { RelatedBooks } from './components/related-books/related-books.component';
 import { UserService } from './services/user_service/user.service';
-import { UserProfilePesponse } from './services/user_service/user.respones.interface';
+import { UserProfileResponse } from './services/user_service/user.respones.interface';
 
 @Component({
   selector: 'app-root',
@@ -24,7 +24,7 @@ export class AppComponent{
               private userService:UserService
   ) {}
 
-  public userData:UserProfilePesponse | null = null;
+  public userData:UserProfileResponse | null = null;
 
   isLeftMenuVisible:boolean = false;
   searchQuery: string = '';

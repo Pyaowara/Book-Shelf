@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { UserProfilePesponse } from '../../services/user_service/user.respones.interface';
+import { UserProfileResponse } from '../../services/user_service/user.respones.interface';
 import { UserService } from '../../services/user_service/user.service';
 import { AuthService } from '../../auth/auth.service';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute} from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-profile',
@@ -17,12 +18,13 @@ export class UserProfileComponent implements OnInit{
   constructor(private route:ActivatedRoute,
               private authService:AuthService,
               private userService:UserService,
-              private cookieService: CookieService
+              private cookieService: CookieService,
+              private router: Router
   ){}
 
   public isOwnerAccount:boolean = false;
 
-  public userData:UserProfilePesponse | null = null;
+  public userData:UserProfileResponse | null = null;
 
   async ngOnInit(){
     this.route.paramMap.subscribe(async params => {
@@ -50,7 +52,7 @@ export class UserProfileComponent implements OnInit{
   }
 
   public setting():void{
-
+    this.router.navigate(['user-setting']);
   }
 
 }
