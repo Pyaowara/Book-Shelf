@@ -404,7 +404,7 @@ app.post('/getUserId', async (req, res) => {
   }
 });
 
-app.delete('/comments/:commentId', async (req, res) => {
+app.delete('/comments/delete/:commentId', async (req, res) => {
   const commentId = req.params.commentId;
   const { userId } = req.body;
 
