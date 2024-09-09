@@ -27,7 +27,7 @@ export class BookDetailComponent implements OnInit {
         })
       );
 
-      this.comments$ = this.http.get<any[]>(`https://books-shelves.vercel.app/${bookId}/comments`).pipe(
+      this.comments$ = this.http.get<any[]>(`https://books-shelves.vercel.app/books/${bookId}/comments`).pipe(
         catchError(error => {
           console.error('Error fetching comments:', error);
           return of([]);
