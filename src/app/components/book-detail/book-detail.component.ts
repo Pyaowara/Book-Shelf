@@ -67,7 +67,7 @@ export class BookDetailComponent implements OnInit {
       return;
     }
 
-    this.http.delete(`https://books-shelves.vercel.app/comments/${commentId}`, { body: { userId: this.userId } }).subscribe({
+    this.http.delete(`https://books-shelves.vercel.app/comments/delete/${commentId}`, { body: { userId: this.userId } }).subscribe({
       next: () => this.refreshComments(),
       error: (err) => {
         console.error('Error deleting comment:', err);
