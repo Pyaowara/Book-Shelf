@@ -13,4 +13,8 @@ export class CommentService {
   addComment(comment: { book_id: number; comment_detail: string; user_id: number }): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/add`, comment);
   }
+
+  deleteComment(commentId: number): Observable<any> {
+    return this.http.delete<any>(`${this.apiUrl}/delete/${commentId}`);
+  }
 }

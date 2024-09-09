@@ -404,5 +404,34 @@ app.post('/getUserId', async (req, res) => {
   }
 });
 
+app.delete('/comments/:commentId', async (req, res) => {
+  const commentId = req.params.commentId;
+  const { userId } = req.body;
+
+  if (!commentId || !userId) {
+    return res.status(400).json({ message: 'Comment ID and User ID are required' });
+  }
+  let conn;
+  try {
+    conn = await pool.getConnection();
+    const [rows] = await conn.query('SELECT user_id FROM comment WHERE comment_id = ?', [commentId]);
+    if (rows.length === 0) {
+      return res.status(404).json({ message: 'Comment not found' });
+    }
+    if (rows[0].user_id !== userId) {
+      return res.status(403).json({ message: 'Unauthorized to delete this comment' });
+    }
+    await conn.query('DELETE FROM comment WHERE comment_id = ?', [commentId]);
+    res.status(200).json({ message: 'Comment deleted successfully' });
+  } catch (err) {
+    console.error('Database error:', err);
+    res.status(500).json({ message: 'Internal Server Error' });
+  } finally {
+    if (conn) {
+      conn.release();
+    }
+  }
+});
+
 
 module.exports = app;

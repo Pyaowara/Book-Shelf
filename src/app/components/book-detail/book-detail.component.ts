@@ -52,6 +52,7 @@ export class BookDetailComponent implements OnInit {
       }).subscribe({
         next: () => {
           this.newComment = '';
+          this.refreshComments();
         },
         error: (err) => {
           console.error('Error submitting comment:', err);
@@ -60,6 +61,13 @@ export class BookDetailComponent implements OnInit {
     }
   }
   
+  deleteComment(commentId: number): void {
+    this.commentService.deleteComment(commentId).subscribe({
+      next: () => this.refreshComments(),
+      error: (error) => console.error('Error deleting comment:', error)
+    });
+  }
+
   getStars(score: number): string {
     return '⭐'.repeat(score);
   }
