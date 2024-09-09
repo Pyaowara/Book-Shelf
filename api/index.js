@@ -379,7 +379,7 @@ app.post('/change/:id', async (req, res) => {
 });
 app.post('/comments/add', (req, res) => {
   const { book_id, comment_detail, user_id } = req.body;
-  const query = 'INSERT INTO comments (book_id, comment_detail, user_id) VALUES (?, ?, ?)';
+  const query = 'INSERT INTO comment (book_id, comment_detail, user_id) VALUES (?, ?, ?)';
   
   db.query(query, [book_id, comment_detail, user_id], (err, result) => {
     if (err) {
