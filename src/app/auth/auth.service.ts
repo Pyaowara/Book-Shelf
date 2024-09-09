@@ -71,4 +71,19 @@ export class AuthService {
     this.router.navigate(['login']);
   }
 
+  public getUserId(): Observable<number | null> {
+    const userToken = this.cookieService.get('userToken');
+    if (!userToken) {
+      return of(null);
+    }
+  
+    return this.http.post<{ userId: number }>('https://books-shelves.vercel.app/getUserId', { token: userToken }).pipe(
+      map(response => response.userId),
+      catchError(error => {
+        console.error('Error fetching user ID:', error);
+        return of(null);
+      })
+    );
+  }
+
 }

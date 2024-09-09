@@ -377,5 +377,32 @@ app.post('/change/:id', async (req, res) => {
     }
   }
 });
+app.post('/comments/add', (req, res) => {
+  const { book_id, comment_detail, user_id } = req.body;
+  const query = 'INSERT INTO comments (book_id, comment_detail, user_id) VALUES (?, ?, ?)';
+  
+  db.query(query, [book_id, comment_detail, user_id], (err, result) => {
+    if (err) {
+      return res.status(500).send(err.message);
+    }
+    res.status(201).send({ message: 'Comment added successfully!' });
+  });
+});
+
+app.post('/getUserId', async (req, res) => {
+  const { token } = req.body;
+
+  if (!token) {
+    return res.status(400).json({ message: 'Token is required' });
+  }
+
+  try {
+    const decoded = jwt.verify(token, 'itkmitl');
+    res.status(200).json({ userId: decoded.user_id });
+  } catch (error) {
+    res.status(401).json({ message: 'Invalid or expired token' });
+  }
+});
+
 
 module.exports = app;
