@@ -62,9 +62,16 @@ export class BookDetailComponent implements OnInit {
   }
   
   deleteComment(commentId: number): void {
-    this.commentService.deleteComment(commentId).subscribe({
+    if (this.userId === null) {
+      console.error('User ID is not available');
+      return;
+    }
+
+    this.http.delete(`https://books-shelves.vercel.app/comments/${commentId}`, { body: { userId: this.userId } }).subscribe({
       next: () => this.refreshComments(),
-      error: (error) => console.error('Error deleting comment:', error)
+      error: (err) => {
+        console.error('Error deleting comment:', err);
+      }
     });
   }
 
