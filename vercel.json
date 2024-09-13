@@ -3,11 +3,11 @@
     "rewrites": [
         {
             "source": "/books/(.*)",
-            "destination": "/api/books/$1"
+            "destination": "/api"
         },
         {
             "source": "/searched/(.*)",
-            "destination": "/api/searched/$1"
+            "destination": "/api"
         },
         {
             "source": "/comments/(.*)",
@@ -15,27 +15,27 @@
         },
         {
             "source": "/register",
-            "destination": "/api/register"
+            "destination": "/api"
         },
         {
             "source": "/login",
-            "destination": "/api/login"
+            "destination": "/api"
         },
         {
             "source": "/getUserProfile",
-            "destination": "/api/getUserProfile"
+            "destination": "/api"
         },
         {
             "source": "/validate-token",
-            "destination": "/api/validate-token"
+            "destination": "/api"
         },
         {
             "source": "/change",
-            "destination": "/api/change"
+            "destination": "/api"
         },
         {
             "source": "/getUserId",
-            "destination": "/api/getUserId"
+            "destination": "/api"
         },
         {
             "source": "/(.*)",
