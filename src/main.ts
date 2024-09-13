@@ -16,7 +16,7 @@ import { initGuard } from './app/auth/guard/init/init.guard';
 
 
 export const routes: Routes = [
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: '', redirectTo: 'login-page', pathMatch: 'full' },
   { path: 'booklist', component: BookListComponent, canActivate:  [authGuard]},
   { path: 'book/:id', component: BookDetailComponent, canActivate:  [authGuard] },
   { path: 'series/:id', component: RelatedBooks, canActivate:  [authGuard] },

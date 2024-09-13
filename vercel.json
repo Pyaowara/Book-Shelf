@@ -22,7 +22,7 @@
             "destination": "/api"
         },
         {
-            "source": "/getUserProfile",
+            "source": "/getUserProfile/(.*)",
             "destination": "/api"
         },
         {
@@ -30,7 +30,7 @@
             "destination": "/api"
         },
         {
-            "source": "/change",
+            "source": "/change/(.*)",
             "destination": "/api"
         },
         {
