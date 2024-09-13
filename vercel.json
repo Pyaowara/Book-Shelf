@@ -2,12 +2,45 @@
     "version": 2,
     "rewrites": [
       {
-        "source": "/api/(.*)",
+        "source": "/books/(.*)",
         "destination": "/api"
       },
       {
-        "source": "/(.*)",
+        "source": "/searched/(.*)",
+        "destination": "/api"
+      },
+      {
+        "source": "/comments/(.*)",
+        "destination": "/api"
+      },
+      {
+        "source": "/register/(.*)",
+        "destination": "/api"
+      },
+      {
+        "source": "/login/(.*)",
+        "destination": "/api"
+      },
+      {
+        "source": "/getUserProfile/(.*)",
+        "destination": "/api"
+      },
+      {
+        "source": "/validate-token/(.*)",
+        "destination": "/api"
+      },
+      {
+        "source": "/change/(.*)",
+        "destination": "/api"
+      },
+      {
+        "source": "/change/(.*)",
+        "destination": "/api"
+      },
+      {
+        "source": "getUserId/(.*)",
         "destination": "/index.html"
       }
+
     ]
   }
