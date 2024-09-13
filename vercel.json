@@ -26,6 +26,10 @@
             "destination": "/api"
         },
         {
+            "source": "/getUserProfile",
+            "destination": "/api"
+        },
+        {
             "source": "/validate-token",
             "destination": "/api"
         },
