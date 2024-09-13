@@ -68,7 +68,7 @@ export class AuthService {
 
   public async logout(){
     await this.cookieService.delete('userToken', '/');
-    this.router.navigate(['login']);
+    this.router.navigate(['login-page']);
   }
 
   public getUserId(): Observable<number | null> {
