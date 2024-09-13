@@ -3,38 +3,42 @@
     "rewrites": [
         {
             "source": "/books/(.*)",
-            "destination": "/api"
+            "destination": "/api/books/$1"
         },
         {
             "source": "/searched/(.*)",
-            "destination": "/api"
+            "destination": "/api/searched/$1"
         },
         {
             "source": "/comments/(.*)",
-            "destination": "/api"
+            "destination": "/api/comments/$1"
         },
         {
             "source": "/register",
-            "destination": "/api"
+            "destination": "/api/register"
         },
         {
             "source": "/login",
-            "destination": "/api"
+            "destination": "/api/login"
         },
         {
-            "source": "/getUserProfile/(.*)",
-            "destination": "/api"
+            "source": "/getUserProfile",
+            "destination": "/api/getUserProfile"
         },
         {
-            "source": "/validate-token/(.*)",
-            "destination": "/api"
+            "source": "/validate-token",
+            "destination": "/api/validate-token"
         },
         {
-            "source": "/change/(.*)",
-            "destination": "/api"
+            "source": "/change",
+            "destination": "/api/change"
         },
         {
-            "source": "getUserId/(.*)",
+            "source": "/getUserId",
+            "destination": "/api/getUserId"
+        },
+        {
+            "source": "/(.*)",
             "destination": "/index.html"
         }
     ]
