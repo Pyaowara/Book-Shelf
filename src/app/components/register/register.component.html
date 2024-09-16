@@ -10,7 +10,7 @@
     <div class="container">
         <div class="left-container"></div>
         <div class="right-container">
-            <form class="register-form" (click)="register()">
+            <form class="register-form">
                 <h1 class="register-title">Register</h1>
                     <div class="input-group">
                         <label for="email" class="form-label">Email address</label>
@@ -37,7 +37,7 @@
                     
                     <div class="block_container">
                         <div class="button-register">
-                            <button type="submit" class="login-button">Create Account</button>
+                            <button type="submit" class="login-button"  (click)="register()">Create Account</button>
                         </div>
                         <div class="button-login">
                             <button type="submit" class="login-button" (click)="login()">Login</button>
