@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
@@ -38,7 +38,7 @@ export class AuthService {
     );
   }
 
-  public register(users: { user_email: string, user_name: string, user_pass: string, user_phone: string}): Observable<string> {
+  public register(users: { user_email: string, user_name: string, user_pass: string, user_phone: string }): Observable<string> {
     return this.http.post(this.registerApiUrl, users, { responseType: 'text' }).pipe(
       map((response: string) => {
         if (response === 'User registered') {
@@ -48,10 +48,25 @@ export class AuthService {
           return 'Register fail';
         }
       }),
-      catchError((error) => {
+      catchError((error: HttpErrorResponse) => {
         console.error('Error during registration:', error);
-        return of('Register fail');
+        let errorMessage = 'An unknown error occurred';
+      
+        try {
+          const errorObject = JSON.parse(error.error);
+      
+          if (errorObject?.message) {
+            errorMessage = errorObject.message;
+          }
+        } catch (e) {
+          console.error('Error parsing error.message:', e);
+        }
+      
+        console.error('Extracted error message:', errorMessage);
+      
+        return of(errorMessage);
       })
+      
     );
   }
 
