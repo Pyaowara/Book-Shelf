@@ -2,6 +2,10 @@
     "version": 2,
     "rewrites": [
         {
+            "source": "/books",
+            "destination": "/api"
+        },
+        {
             "source": "/books/(.*)",
             "destination": "/api"
         },
