@@ -13,7 +13,7 @@ const db = mysql.createConnection({
   host: process.env.DB_HOST,
   user: process.env.DB_ROOT,
   password: process.env.DB_PASS,
-  database: 'book',
+  database: 'bookv2',
   port: 3306,
 });
 
