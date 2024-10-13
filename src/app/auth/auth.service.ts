@@ -12,9 +12,12 @@ import { lastValueFrom } from 'rxjs';
 
 export class AuthService {
 
-  private loginApiUrl = 'https://books-shelves.vercel.app/login';
-  private registerApiUrl = 'https://books-shelves.vercel.app/register';
-  private validateTokenApiUrl = 'https://books-shelves.vercel.app/validate-token';
+  // private loginApiUrl = 'https://books-shelves.vercel.app/login';
+  // private registerApiUrl = 'https://books-shelves.vercel.app/register';
+  // private validateTokenApiUrl = 'https://books-shelves.vercel.app/validate-token';
+  private loginApiUrl = 'https://book-back-lovat.vercel.app/user/login';
+  private registerApiUrl = 'https://book-back-lovat.vercel.app/user/register';
+  private validateTokenApiUrl = 'https://book-back-lovat.vercel.app/user/validate-token';
 
   constructor(private http: HttpClient,
               private router: Router,
@@ -39,36 +42,36 @@ export class AuthService {
   }
 
   public register(users: { user_email: string, user_name: string, user_pass: string, user_phone: string }): Observable<string> {
-    return this.http.post(this.registerApiUrl, users, { responseType: 'text' }).pipe(
-      map((response: string) => {
-        if (response === 'User registered') {
-          this.router.navigate(['login']);
-          return 'Register successful';
-        } else {
-          return 'Register fail';
+  return this.http.post(this.registerApiUrl, users, { responseType: 'text' }).pipe(
+    map((response: string) => {
+      if (response === 'User registered') {
+        this.router.navigate(['login']);
+        return 'Register successful';
+      } else {
+        return 'Register fail';
+      }
+    }),
+    catchError((error: HttpErrorResponse) => {
+      console.error('Error during registration:', error);
+      let errorMessage = 'An unknown error occurred';
+
+      try {
+        const errorObject = JSON.parse(error.error);
+    
+        if (errorObject?.message) {
+          errorMessage = errorObject.message;
         }
-      }),
-      catchError((error: HttpErrorResponse) => {
-        console.error('Error during registration:', error);
-        let errorMessage = 'An unknown error occurred';
-      
-        try {
-          const errorObject = JSON.parse(error.error);
-      
-          if (errorObject?.message) {
-            errorMessage = errorObject.message;
-          }
-        } catch (e) {
-          console.error('Error parsing error.message:', e);
-        }
-      
-        console.error('Extracted error message:', errorMessage);
-      
-        return of(errorMessage);
-      })
-      
-    );
-  }
+      } catch (e) {
+        console.error('Error parsing error.message:', e);
+      }
+    
+      console.error('Extracted error message:', errorMessage);
+    
+      return of(errorMessage);
+    })
+    
+  );
+}
 
   public async validateToken(token:string) {
     try {
@@ -83,7 +86,7 @@ export class AuthService {
 
   public async logout(){
     await this.cookieService.delete('userToken', '/');
-    this.router.navigate(['login-page']);
+    this.router.navigate(['login']);
   }
 
   public getUserId(): Observable<number | null> {
@@ -92,7 +95,7 @@ export class AuthService {
       return of(null);
     }
   
-    return this.http.post<{ userId: number }>('https://books-shelves.vercel.app/getUserId', { token: userToken }).pipe(
+    return this.http.post<{ userId: number }>('https://book-back-lovat.vercel.app/user/getUserId', { token: userToken }).pipe(
       map(response => response.userId),
       catchError(error => {
         console.error('Error fetching user ID:', error);

@@ -1,7 +1,5 @@
 <div class="book-detail-container">
-  <h1>Book Details</h1>
-
-  <div *ngIf="book$ | async as book; else loading" class="book-detail">
+  <div *ngIf="book$ | async as book;" class="book-detail">
     <div class="book-header">
       <h2>{{ book.book_name_en }}</h2>
       <h3>{{ book.book_name_th }}</h3>
@@ -10,9 +8,8 @@
 
     <div class="book-content">
       <img *ngIf="book.book_image" [src]="book.book_image" alt="{{ book.book_name_en }}" class="book-image"/>
-
       <div class="book-info">
-        <p><strong>Publisher:</strong> {{ book.publisher }}</p>
+        <p><strong>Publisher:</strong> {{ book.publisher.publisher_name }}</p>
         <p><strong>Author:</strong> {{ book.author_name }}</p>
         <p><strong>Status:</strong> {{ book.book_status }}</p>
         <p><strong>Score:</strong> {{ book.book_score }}</p>
@@ -20,51 +17,131 @@
         <p><strong>Pages:</strong> {{ book.book_pages }}</p>
         <p><strong>References:</strong> {{ book.references_link }}</p>
         <p><strong>Category:</strong> {{ book.book_category }}</p>
-        <p><strong>Language:</strong> {{ book.book_language }}</p>
+        <p><strong>Language:</strong> {{ book.language }}</p>
       </div>
     </div>
+  
+    <div class="book-button">
+      <button *ngIf="!isFavorite"  type="submit" (click)="addFavorite(book.book_id)">Favorite</button>
+      <button *ngIf="isFavorite" type="reset" (click)="dropFavorite(book.book_id)">Unfavorite</button>
+      <button type="submit" *ngIf="userData?.user_permission === 'Manager' || userData?.publisher_id == book.publisher.publisher_id" (click)="editBook()">Edit Book</button>
+      <button type="submit" *ngIf="userData?.user_permission === 'Manager' || userData?.publisher_id == book.publisher.publisher_id" 
+        (click)="confirmDropBook($event)">Delete</button>
+    </div>
+
+    <div class="book-description">
+      <h3>Where to buy?</h3>
+    </div>
+    <div class="shop-links">
+      <button *ngFor="let shop of shopLinks" (click)="redirectToShop(shop.shop_link)" class="shop-button">
+        <ng-container *ngIf="shop.shop_image !== ''; else showDetail">
+          <img [src]="shop.shop_image" alt="Shop Image" class="shop-image" />
+        </ng-container>
+        <ng-template #showDetail>
+          {{ shop.shop_detail }}
+        </ng-template>
+      </button>
+    </div>
+    
+    
 
     <div class="book-description">
       <h3>Description</h3>
       <p>{{ book.book_descriptions }}</p>
     </div>
-
     <div class="comments-section">
       <h3>Comments</h3>
+    
       <div class="post-comment">
         <h4>Post a Comment</h4>
         <form (ngSubmit)="submitComment()">
-          <textarea [(ngModel)]="newComment" name="comment" rows="4" placeholder="Write your comment here..." required></textarea>
-          <button type="submit">Submit Comment</button>
-        </form>
-      </div>
-      <div *ngIf="comments$ | async as comments; else noComments" class="comments-list">
-        <div *ngFor="let comment of comments" class="comment-card">
-          <div class="comment-header">
-            <img *ngIf="comment.user_image" [src]="comment.user_image" alt="{{ comment.user_name }}" class="user-image"/>
-            <div class="user-info">
-              <p class="user-name">{{ comment.user_name }}</p>
-              <p class="timestamp">{{ comment.time_stamp | date:'short' }}</p>
+            <textarea [(ngModel)]="newComment" name="comment" rows="4" placeholder="Write your comment here..." required></textarea>
+            
+            <div>
+                <label for="score">Score:</label>
+                <select [(ngModel)]="newScore" name="score" required>
+                    <option *ngFor="let s of [1, 2, 3, 4, 5]" [value]="s">{{ s }}</option>
+                </select>
             </div>
+            <div>
+                <input type="checkbox" [(ngModel)]="isChecked" name="checkbox" />
+                <label for="checkbox">Spoiler</label>
+            </div>
+            
+            <button type="submit">Submit Comment</button>
+        </form>
+    </div>
+    
+    <div *ngIf="comments$ | async as comments; else noComments" class="comments-list">
+      <div *ngFor="let comment of comments" 
+           class="comment-card" 
+           [ngClass]="{'blur': comment.spoiler && !spoilerVisibility[comment.comment_id]}"
+           (click)="comment.spoiler && !spoilerVisibility[comment.comment_id] ? toggleSpoiler(comment.comment_id) : null">
+
+        <div class="comment-header">
+          <img *ngIf="comment.user.user_image" [src]="comment.user.user_image" alt="{{ comment.user_name }}" class="user-image" />
+          <div class="user-info">
+            <p class="user-name">{{ comment.user.user_name }}</p>
+            <p class="timestamp">{{ comment.time_stamp | date: 'short' }}</p>
           </div>
-          <div class="comment-body">
-            <p>{{ comment.comment_detail }}</p>
+        </div>
+    
+        <div class="comment-body" (click)="!spoilerVisibility[comment.comment_id] ? toggleSpoiler(comment.comment_id) : null">
+          <p *ngIf="!spoilerVisibility[comment.comment_id]">{{ comment.spoiler ? 'Click to view spoiler' : comment.comment_detail }}</p>
+          <p *ngIf="spoilerVisibility[comment.comment_id]">{{ comment.comment_detail }}</p>
+        </div>
+    
+        <div class="comment-footer">
+          <button 
+              (click)="upvote(comment.comment_id)"
+              [ngClass]="{'voted': hasUserVoted(comment.comment_id, userId, 'Upvote')}" 
+              class="vote-button">
+              Upvote ({{ comment.up_vote }})
+          </button>
+          <button (click)="downvote(comment.comment_id)" 
+              [ngClass]="{'voted': hasUserVoted(comment.comment_id, userId, 'Downvote')}" 
+              class="vote-button">Downvote ({{ comment.down_vote }})</button>
+          <button *ngIf="comment.user.user_id === userId" 
+                            (click)="confirmDeleteComment(comment.comment_id, $event)" 
+                            class="vote-button">Delete</button>
+          <button (click)="toggleReply(comment.comment_id)" class="reply-button">Reply</button>
+    
+          <div *ngIf="replyMode[comment.comment_id]" class="reply-section">
+            <textarea [(ngModel)]="replyComment" name="reply" rows="2" placeholder="Write your reply here..." required></textarea>
+            <button (click)="submitReply(comment.comment_id)" class="submit-reply-button">Submit Reply</button>
           </div>
-          <div class="comment-footer">
-            <button (click)="upvote(comment.comment_id)" class="vote-button">Upvote ({{ comment.up_vote }})</button>
-            <button (click)="downvote(comment.comment_id)" class="vote-button">Downvote ({{ comment.down_vote }})</button>
-            <button *ngIf="comment.user_id === userId" (click)="deleteComment(comment.comment_id)" class="delete-button">Delete</button>
+    
+          <div *ngIf="comment.replies && comment.replies.length" class="replies-list">
+            <div *ngFor="let reply of comment.replies" class="reply-comment">
+              <div class="reply-header">
+                <img *ngIf="reply.user.user_image" [src]="reply.user.user_image" alt="{{ reply.user.user_name }}" class="user-image" />
+                <div class="user-info">
+                  <p class="user-name">{{ reply.user.user_name }}</p>
+                  <p class="timestamp">{{ reply.time_stamp | date: 'short' }}</p>
+                </div>
+              </div>
+              <div class="reply-body">
+                <p>{{ reply.comment_detail }}</p>
+              </div>
+              <div class="reply-footer">
+                <button 
+                    (click)="upvote(reply.comment_id)"
+                    [ngClass]="{'voted': hasUserVoted(reply.comment_id, userId, 'Upvote')}" 
+                    class="vote-button">
+                    Upvote ({{ reply.up_vote }})
+                </button>
+                <button (click)="downvote(reply.comment_id)" 
+                    [ngClass]="{'voted': hasUserVoted(reply.comment_id, userId, 'Downvote')}" 
+                    class="vote-button">Downvote ({{ reply.down_vote }})</button>
+                <button *ngIf="reply.user.user_id === userId" (click)="deleteComment(reply.comment_id)" class="vote-button">Delete</button>
+              </div>                
+            </div>
           </div>
         </div>
       </div>
-  
-      <ng-template #noComments>
-        <p class="no-comments">No comments yet.</p>
-      </ng-template>
     </div>
-  </div>
-
-  <ng-template #loading>
-    <p class="loading">Loading...</p>
+    
+  <ng-template #noComments>
+      <p class="no-comments">No comments yet.</p>
   </ng-template>
-</div>
+  

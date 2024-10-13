@@ -1,8 +1,7 @@
 .book-detail-container {
-    max-width: 900px; /* Adjusted width */
+    max-width: 900px;
     margin: 0 auto;
     padding: 20px;
-    font-family: Arial, sans-serif;
   }
   
   .book-detail {
@@ -20,6 +19,9 @@
   .book-header h2 {
     font-size: 2em;
     margin: 0;
+  }
+  p,h2{
+  color: black;
   }
   
   .book-header h3 {
@@ -48,6 +50,7 @@
   
   .book-info p {
     margin: 5px 0;
+    color: black;
   }
   
   .book-description {
@@ -100,5 +103,5 @@
   .related-book-info p {
     margin: 0;
     font-size: 1em;
+    color: black;
   }
-  

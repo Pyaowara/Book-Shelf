@@ -1,0 +1,17 @@
+<div class="head">
+    <h3>Change Description</h3>
+</div>
+<div class="text-box">
+    <textarea type="text" [(ngModel)]="newimg" placeholder="Enter your new Description"></textarea><br>
+    <input type="password" [(ngModel)]="confrimePass" placeholder="Enter confrime password"><br>
+</div>
+<button (click)="update()" class="button">Update</button>
+<div *ngIf="noti_succes" class="alert">
+    <span class="closebtn" (click)="noti_succes = false;">&times;</span>
+    Update successful.
+</div>
+
+<div *ngIf="noti_fail" class="alert" style="background-color: #F66358;">
+    <span class="closebtn" (click)="noti_fail = false;">&times;</span>
+    {{message}}
+</div>

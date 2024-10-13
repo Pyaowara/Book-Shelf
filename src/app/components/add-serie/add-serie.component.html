@@ -1,0 +1,36 @@
+<div class="container">
+    <h3>Add serie</h3>
+    <!-- input serie_name_th -->
+    <input class="texin" type="text" [(ngModel)]="serie_name_th" placeholder="Enter serie name (Thai)"><br>
+
+    <!-- input serie_name_en -->
+    <input class="texin" type="text" [(ngModel)]="serie_name_en" placeholder="Enter serie name (English)"><br>
+
+    <!-- input serie_name_original -->
+    <input class="texin" type="text" [(ngModel)]="serie_name_original" placeholder="Enter original serie name"><br>
+
+    <!-- input serie_status  [(ngModel)]="#" -->
+    <select class="texin" id="serie_status" name="book_status" [(ngModel)]="serie_status"> 
+        <option value="" disabled selected>Select a status</option>
+        <option value="Unknown">Unknown</option>
+        <option value="On Going">On Going</option>
+        <option value="Finished">Finished</option>
+        <option value="Paused">Paused</option>
+    </select><br>
+
+    <!-- input serie_detail -->
+    <textarea class="texin" type="text" placeholder="serie detail" [(ngModel)]="serie_detail"></textarea><br>
+
+    <!-- submit -->
+    <button type="submit" (click)="submit()">submit</button>
+    <br><br>
+    <div *ngIf="noti_succes" class="alert">
+        <span class="closebtn" (click)="noti_succes = false;">&times;</span>
+        Update successful.
+    </div>
+    
+    <div *ngIf="noti_fail" class="alert" style="background-color: #F66358;">
+        <span class="closebtn" (click)="noti_fail = false;">&times;</span>
+        {{message}}
+    </div>
+</div>

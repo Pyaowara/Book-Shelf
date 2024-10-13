@@ -20,10 +20,9 @@ export class UserService{
     try {
       this.token = this.cookieService.get('userToken');
       return await lastValueFrom(
-        this.http.post<UserProfileResponse>(`https://books-shelves.vercel.app/getUserProfile`, { token: this.token })
+        this.http.post<UserProfileResponse>(`https://book-back-lovat.vercel.app/user/getUserProfile`, { token: this.token })
       );
     } catch (err) {
-      console.log(err);
       return null;
     }
   }
@@ -31,10 +30,9 @@ export class UserService{
   public async getDataByParam(userName:string|null){
     try {
       return await lastValueFrom(
-        this.http.get<UserProfileResponse>(`https://books-shelves.vercel.app/getUserProfile/`+userName)
+        this.http.get<UserProfileResponse>(`https://book-back-lovat.vercel.app/user/getUserProfile/`+userName)
       );
     } catch (err) {
-      console.log(err);
       return null;
     }
   }
@@ -43,7 +41,7 @@ export class UserService{
     try {
       return await lastValueFrom(
         this.http.post<{ message: string, userToken: string }>(
-          `https://books-shelves.vercel.app/change/user_name`,
+          `https://book-back-lovat.vercel.app/user/change/user_name`,
           { user_id: userId, data: userName, password: password }
         )
       );
@@ -62,7 +60,41 @@ export class UserService{
   public async changeEmail(userId:string, userEmail:string, password:string){
     try {
       return await lastValueFrom(
-        this.http.post<{message:string, userToken:string}>(`https://books-shelves.vercel.app/change/user_email`, {user_id:userId, data:userEmail, password:password})
+        this.http.post<{message:string, userToken:string}>(`https://book-back-lovat.vercel.app/user/change/user_email`, {user_id:userId, data:userEmail, password:password})
+      );
+    } catch (err:any) {
+      let errorMessage = 'Please fill out all the fields';
+      if (err.status === 409) {
+        errorMessage = 'Email already exists';
+      }
+      else if (err.status === 401) {
+        errorMessage = 'Invalid password';
+      }
+      throw { status: err.status, message: errorMessage };
+    }
+  }
+
+  public async changeImg(userId:string, userImg:string, password:string){
+    try {
+      return await lastValueFrom(
+        this.http.post<{message:string, userToken:string}>(`https://book-back-lovat.vercel.app/user/change/user_image`, {user_id:userId, data:userImg, password:password})
+      );
+    } catch (err:any) {
+      let errorMessage = 'Please fill out all the fields';
+      if (err.status === 409) {
+        errorMessage = 'Email already exists';
+      }
+      else if (err.status === 401) {
+        errorMessage = 'Invalid password';
+      }
+      throw { status: err.status, message: errorMessage };
+    }
+  }
+
+  public async changeDescription(userId:string, userImg:string, password:string){
+    try {
+      return await lastValueFrom(
+        this.http.post<{message:string, userToken:string}>(`https://book-back-lovat.vercel.app/user/change/user_description`, {user_id:userId, data:userImg, password:password})
       );
     } catch (err:any) {
       let errorMessage = 'Please fill out all the fields';
@@ -79,7 +111,7 @@ export class UserService{
   public async changePassword(userId:string, userPassword:string, password:string){
     try {
       return await lastValueFrom(
-        this.http.post<{message:string, userToken:string}>(`https://books-shelves.vercel.app/change/user_pass`, {user_id:userId, data:userPassword, password:password})
+        this.http.post<{message:string, userToken:string}>(`https://book-back-lovat.vercel.app/user/change/user_pass`, {user_id:userId, data:userPassword, password:password})
       );
     } catch (err:any) {
       let errorMessage = 'Please fill out all the fields';
@@ -93,7 +125,7 @@ export class UserService{
   public async changePhone(userId:string, userPhone:string, password:string){
     try {
       return await lastValueFrom(
-        this.http.post<{message:string, userToken:string}>(`https://books-shelves.vercel.app/change/user_phone`, {user_id:userId, data:userPhone, password:password})
+        this.http.post<{message:string, userToken:string}>(`https://book-back-lovat.vercel.app/user/change/user_phone`, {user_id:userId, data:userPhone, password:password})
       );
     } catch (err:any) {
       let errorMessage = 'Please fill out all the fields';

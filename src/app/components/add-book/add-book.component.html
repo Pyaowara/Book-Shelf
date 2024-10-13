@@ -1,0 +1,126 @@
+<div class="container">
+    <div class="headtext"><h3>Add Book</h3></div>
+
+    <div class="input">
+        <!-- input book_name_th -->
+        <input class="texin" type="text" [(ngModel)]="book_name_th" placeholder="Enter book name (Thai)"><br>
+
+        <!-- input book_name_en -->
+        <input class="texin" type="text" [(ngModel)]="book_name_en" placeholder="Enter book name (English)"><br>
+
+        <!-- input book_name_original -->
+        <input class="texin" type="text" [(ngModel)]="book_name_originl" placeholder="Enter original book name"><br>
+
+        <!-- input book_image -->
+        <br>
+        <label for="file-input" class="image-label">
+            <img *ngIf="base64Image" [src]="base64Image" alt="Image preview" class="image-preview" />
+            <img *ngIf="!base64Image"
+                src="https://t3.ftcdn.net/jpg/04/60/01/36/360_F_460013622_6xF8uN6ubMvLx0tAJECBHfKPoNOR5cRa.jpg"
+                alt="Upload Image" class="image-preview" />
+            <input type="file" id="file-input" (change)="onFileChange($event)" accept="image/*" />
+        </label><br>
+        <br>
+
+        <!-- input book_category -->
+        <div class="headtext">book category</div>
+        <div class="category">
+            <div *ngFor="let category of categories" class="checkbox-item">
+                <input type="checkbox" [id]="category.id" [(ngModel)]="category.selected" />
+                <label [for]="category.id">{{ category.label }}</label>
+            </div>
+        </div><br>
+
+        <!-- input book_descriptions -->
+        <textarea class="texin" type="text" [(ngModel)]="book_descriptions" placeholder="Enter book descriptions"></textarea><br>
+
+        <!-- input book_status -->
+        <div class="headtext">status</div>
+        <select id="book_status" [(ngModel)]="book_status" name="book_status">
+            <option value="" disabled selected>Select a status</option>
+            <option value="Not Available">Not Available</option>
+            <option value="Now Available">Now Available</option>
+            <option value="Unknown">Unknown</option>
+        </select><br>
+
+
+        <!-- input book_price -->
+        <div class="texin" class="headtext">price</div>
+        <input class="texin" type="number" [(ngModel)]="book_price" placeholder="Enter book price"><br>
+
+        <!-- input book_pages -->
+        <div class="texin" class="headtext">pages</div>
+        <input class="texin" type="number" [(ngModel)]="book_pages" placeholder="Enter number of pages"><br>
+
+        <!-- input Language -->
+        <div class="headtext">language</div>
+        <select id="language" [(ngModel)]="language" name="language">
+            <option value="" disabled selected>Select a language</option>
+            <option value="Unknown">Unknown</option>
+            <option value="Thai">Thai</option>
+            <option value="English">Englist</option>
+            <option value="Korean">Korean</option>
+            <option value="Chinese">Chinese</option>
+            <option value="Japanese">Japanese</option>
+        </select><br>
+
+        <!-- input release_date -->
+        <div class="headtext">release</div>
+        <input class="texin"type="date" [(ngModel)]="release_date" placeholder="Select release date"><br>
+
+        <!-- input author -->
+        <div class="texin" class="headtext">author</div>
+        <select id="author" [(ngModel)]="selectedAuthor" name="author">
+            <option value="" disabled selected>Select a author</option>
+            <option *ngFor="let aut of author_all" [value]="aut.author_id">
+                {{ aut.author_name }}
+            </option>
+        </select><br>
+
+        <!-- input publisher -->
+        <div *ngIf="userData?.publisher_id === null">
+            <div class="headtext">publisher</div>
+            <select id="publisher" [(ngModel)]="selectedPublisherId" name="publisher">
+                <option value="" disabled selected>Select a publisher</option>
+                <option *ngFor="let pub of publisher_all" [value]="pub.publisher_id">
+                    {{ pub.publisher_name }}
+                </option>
+            </select><br>
+        </div>
+
+        <!-- input serie -->
+        <div class="headtext">serie</div>
+        <select id="serie" [(ngModel)]="selectedSerie" name="serie">
+            <option value="" disabled selected>Select a serie</option>
+            <option *ngFor="let serie of serie_all" [value]="serie.serie_id">
+                {{ serie.serie_name_th }}
+            </option>
+        </select><br>
+
+        <!-- linkshop -->
+        <div class="texin" class="headtext">Link Shop amount </div>
+        <input class="texin" type="number" [(ngModel)]="numberOfLinks" placeholder="Enter number of link" (input)="shop_book()"><br><br>
+        <div *ngFor="let link of links; let i = index">
+            <div class="headtext">Shop Link {{i+1}}</div>
+            <input class="texin" type="text" [(ngModel)]="links[i].shop_link" placeholder="Shop Link {{ i + 1 }}">
+            <input class="texin" type="text" [(ngModel)]="links[i].shop_detail" placeholder="Shop Detail {{ i + 1 }}">
+            <input class="texin" type="file" [(ngModel)]="links[i].shop_image" (change)="onFileChangeShopLink($event, i)"
+                accept="image/*">
+        </div>
+
+        <!-- submit -->
+        <button class="button" type="submit" (click)="submit()">submit</button><br><br>
+        
+        <div *ngIf="noti_succes" class="alert">
+            <span class="closebtn" (click)="noti_succes = false;">&times;</span>
+            Uploade successful.
+        </div>
+        
+        <div *ngIf="noti_fail" class="alert" style="background-color: #F66358;">
+            <span class="closebtn" (click)="noti_fail = false;">&times;</span>
+            {{message}}
+        </div>
+
+    </div>
+
+</div>

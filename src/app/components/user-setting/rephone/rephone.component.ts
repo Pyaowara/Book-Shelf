@@ -14,10 +14,12 @@ import { Router } from '@angular/router';
   styleUrl: './rephone.component.scss'
 })
 export class RephoneComponent implements OnInit{
-  public newPhone:string = '';
-  public confrimePass:string = '';
-  public userData:UserProfileResponse|null = null;
-  public message:string|undefined = '';
+  newPhone:string = '';
+  confrimePass:string = '';
+  userData:UserProfileResponse|null = null;
+  message:string|undefined = '';
+  noti_succes:boolean = false;
+  noti_fail:boolean = false;
 
   constructor(private userService: UserService,
               private cookieService: CookieService,
@@ -33,16 +35,28 @@ export class RephoneComponent implements OnInit{
     return !isNaN(number) && Number.isInteger(number);
   }
 
+  notifySucces(){
+    this.noti_succes = true;
+    this.noti_fail = false;
+  }
+
+  notifyfail(){
+    this.noti_fail = true;
+    this.noti_succes = false;
+  }
+
   async update(){
     if(this.isNumeric(this.newPhone)){
       try{
         let res = await this.userService.changePhone(this.userData!.user_id, this.newPhone, this.confrimePass);
         this.cookieService.set('userToken', res!.userToken, 30, '/');
         this.message =  res?.message;
+        this.notifySucces();
       }
       catch(err:any){
         console.log('Error:', err);
-        this.message = err.message;
+        this.message = await err.message;
+        this.notifyfail();
       }
     }
     else{
