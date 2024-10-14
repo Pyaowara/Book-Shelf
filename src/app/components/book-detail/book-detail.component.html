@@ -10,7 +10,7 @@
       <img *ngIf="book.book_image" [src]="book.book_image" alt="{{ book.book_name_en }}" class="book-image"/>
       <div class="book-info">
         <p><strong>Publisher:</strong> {{ book.publisher.publisher_name }}</p>
-        <p><strong>Author ID:</strong> {{ book.author_id }}</p>
+        <p><strong>Author Name:</strong> {{ book.author.author_name }}</p>
         <p><strong>Status:</strong> {{ book.book_status }}</p>
         <p><strong>Score:</strong> {{ book.book_score }}</p>
         <p><strong>Price:</strong> {{ book.book_price }}</p>
