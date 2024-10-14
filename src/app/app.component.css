@@ -78,6 +78,13 @@ button {
   background-color: #3f3f3f;
 }
 
+.user-image {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
 .menu-toggle-button {
   cursor: pointer;
   background: none;

@@ -42,9 +42,12 @@
             <button (click)="searchBooks()" class="search-button">Search</button>
             <button (click)="toggleFilterModal()" class="filter-button">Filter</button>
       </div>
-          <div class="nav-buttons">
-            <button (click)="goToUserProfile()" class="user-profile-button">User</button>
-          </div>
+      <div class="nav-buttons">
+        <button (click)="goToUserProfile()" class="user-profile-button">
+          <img [src]="userData?.user_image" alt="User Image" class="user-image" />
+          {{ userData?.user_name }}
+        </button>
+      </div>
 </mat-toolbar>
     <div *ngIf="isFilterModalVisible" class="filter-modal">
       <div class="filter-modal-content">
