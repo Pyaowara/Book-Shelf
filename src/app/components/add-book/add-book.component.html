@@ -109,7 +109,7 @@
         </div>
 
         <!-- submit -->
-        <button class="button" type="submit" (click)="submit()">submit</button><br><br>
+        <button class="button" type="submit" (click)="submit($event)">submit</button><br><br>
         
         <div *ngIf="noti_succes" class="alert">
             <span class="closebtn" (click)="noti_succes = false;">&times;</span>

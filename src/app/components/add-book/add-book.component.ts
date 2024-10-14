@@ -150,7 +150,10 @@ export class AddBookComponent implements OnInit{
     this.book_category = selectedValues;
   }
 
-  async submit() {
+  async submit(event: Event) {
+    event.stopPropagation();
+    const confirmation = confirm("Are you sure you want to add this book?");
+    if (confirmation){
     try {
       await this.getSelectedValues();
       if(this.release_date == '' || this.language == ''){
@@ -172,7 +175,7 @@ export class AddBookComponent implements OnInit{
     catch {
       this.message = "Upload failed. Please try again.";
       this.notifyfail();
-    }
+    }}
   }
 
   shop_book() {

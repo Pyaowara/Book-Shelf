@@ -22,7 +22,7 @@
     <textarea class="texin" type="text" placeholder="serie detail" [(ngModel)]="serie_detail"></textarea><br>
 
     <!-- submit -->
-    <button type="submit" (click)="submit()">submit</button>
+    <button type="submit" (click)="submit($event)">submit</button>
     <br><br>
     <div *ngIf="noti_succes" class="alert">
         <span class="closebtn" (click)="noti_succes = false;">&times;</span>

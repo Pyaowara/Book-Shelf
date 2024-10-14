@@ -40,18 +40,22 @@ export class ReimgComponent implements OnInit{
     this.noti_succes = false;
   }
 
-  async update(){
+  async update(event: Event){
+    event.stopPropagation();
+    const confirmation = confirm("Are you sure you want to change your profile picture?");
+    if (confirmation){
     try{
       let res = await this.userService.changeImg(this.userData!.user_id, this.newimg, this.confrimePass);
       await this.cookieService.set('userToken', res!.userToken, 30, '/');
       this.message =  await res?.message;
       this.notifySucces();
+      window.location.reload();
     }
     catch(err:any){
       this.message = await err.message;
       this.notifyfail();
     }
-  }
+  }}
 
   async loadData(){
     this.userData = await this.userService.getData();

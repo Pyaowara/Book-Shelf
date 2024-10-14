@@ -41,22 +41,26 @@ export class RepasswordComponent implements OnInit{
     this.noti_succes = false;
   }
 
-  async update(){
+  async update(event :Event){
     if(this.newPassword == this.confrimeNewPassword){
+      event.stopPropagation();
+      const confirmation = confirm("Are you sure you want to update your password?");
+      if (confirmation){
       try{
         let res = await this.userService.changePassword(this.userData!.user_id, this.newPassword, this.confrimePass);
         await this.cookieService.set('userToken', res!.userToken, 30, '/');
         this.message =  await res?.message;
         this.notifySucces();
+        window.location.reload();
       }
       catch(err:any){
         console.log('Error:', err);
         this.message = await err.message;
         this.notifyfail();
       }
-    }
+    }}
     else{
-      this.message = 'Invalid confrime new password';
+      this.message = 'Password and Confirm Password must be match.';
       this.notifyfail();
     }
     

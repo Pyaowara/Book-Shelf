@@ -40,17 +40,21 @@ export class RedescriptionComponent implements OnInit{
     this.noti_succes = false;
   }
 
-  async update(){
+  async update(event: Event){
+    event.stopPropagation();
+    const confirmation = confirm("Are you sure you want to update your description?");
+    if (confirmation){
     try{
       let res = await this.userService.changeDescription(this.userData!.user_id, this.newimg, this.confrimePass);
       await this.cookieService.set('userToken', res!.userToken, 30, '/');
       this.message =  await res?.message;
       this.notifySucces();
+      window.location.reload();
     }
     catch(err:any){
       this.message = await err.message;
       this.notifyfail();
-    }
+    }}
   }
 
   async loadData(){

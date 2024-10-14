@@ -3,9 +3,9 @@
 </div>
 <div class="text-box">
     <textarea type="text" [(ngModel)]="newimg" placeholder="Enter your new Description"></textarea><br>
-    <input type="password" [(ngModel)]="confrimePass" placeholder="Enter confrime password"><br>
+    <input type="password" [(ngModel)]="confrimePass" placeholder="Enter your password"><br>
 </div>
-<button (click)="update()" class="button">Update</button>
+<button (click)="update($event)" class="button">Update</button>
 <div *ngIf="noti_succes" class="alert">
     <span class="closebtn" (click)="noti_succes = false;">&times;</span>
     Update successful.

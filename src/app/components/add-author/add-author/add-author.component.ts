@@ -44,14 +44,17 @@ export class AddAuthorComponent {
     this.noti_succes = false;
   }
 
-  async submit(){
+  async submit(event: Event){
     if(this.author_name == ''){
       this.message = 'Please fill in all information.';
       this.notifyfail();
       return;
     }
+    event.stopPropagation();
+    const confirmation = confirm("Are you sure you want to update this book?");
+    if (confirmation){
     let res = await this.bookService.addAuthor(this.author_name, this.base64Image!, this.author_description);
     this.message = res.message;
-    this.notifySucces();
+    this.notifySucces();}
   }
 }

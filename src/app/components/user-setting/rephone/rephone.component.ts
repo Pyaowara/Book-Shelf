@@ -45,22 +45,26 @@ export class RephoneComponent implements OnInit{
     this.noti_succes = false;
   }
 
-  async update(){
+  async update(event: Event){
     if(this.isNumeric(this.newPhone)){
+      event.stopPropagation();
+      const confirmation = confirm("Are you sure you want to update your phone number?");
+      if (confirmation){
       try{
         let res = await this.userService.changePhone(this.userData!.user_id, this.newPhone, this.confrimePass);
         this.cookieService.set('userToken', res!.userToken, 30, '/');
         this.message =  res?.message;
         this.notifySucces();
+        window.location.reload();
       }
       catch(err:any){
         console.log('Error:', err);
         this.message = await err.message;
         this.notifyfail();
       }
-    }
+    }}
     else{
-      this.message = 'Numbers only please';
+      this.message = 'Only number allowed';
     }
   }
 

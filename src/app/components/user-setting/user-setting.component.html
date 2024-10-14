@@ -4,7 +4,9 @@
     <div class="sidebar-menu">
         <div class="profile-info">
             <img [src]="userData?.user_image" class="profile-picture">
-            <h3>{{userData?.user_name}}</h3>
+            <h3>Username: {{userData?.user_name}}</h3>
+            <h3>Email: {{userData?.user_email}}</h3>
+            <h3>Phone {{userData?.user_phone}}</h3>
         </div>
         <ul class="menu">
             <li><button (click)="changeName()">Change Username</button></li>

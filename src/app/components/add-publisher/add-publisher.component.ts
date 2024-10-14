@@ -43,7 +43,10 @@ export class AddPublisherComponent {
     this.noti_succes = false;
   }
 
-  async submit(){
+  async submit(event: Event){
+    event.stopPropagation();
+    const confirmation = confirm("Are you sure you want to add this publisher?");
+    if (confirmation){
     if(this.publisher_name == ''){
       this.message = 'Please fill in all information.';
       this.notifyfail()
@@ -52,5 +55,5 @@ export class AddPublisherComponent {
     let res = await this.bookService.addPublisher(this.publisher_name, this.base64Image!);
     this.message = res.message;
     this.notifySucces();
-  }
+  }}
 }

@@ -30,7 +30,10 @@ export class AddSerieComponent {
     this.noti_fail = true;
     this.noti_succes = false;
   }
-  async submit(){
+  async submit(event: Event){
+    event.stopPropagation();
+    const confirmation = confirm("Are you sure you want to add this serie?");
+    if (confirmation){
     try{
       if(this.serie_status == '' || this.serie_name_th == '' || this.serie_name_en == '' || this.serie_name_original == ''){
         this.message = 'Please fill in complete information.';
@@ -45,5 +48,5 @@ export class AddSerieComponent {
       this.message = "Upload failed. Please try again.";
       this.notifySucces();
     }
-  }
+  }}
 }
