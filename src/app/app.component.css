@@ -60,18 +60,19 @@ button {
   display: flex;
   align-items: center;
   gap: 10px; /* Space between buttons */
-  padding-right: 20px; /* Padding to ensure buttons don't overflow */
+  padding-right: 20px;
 }
 
 .user-profile-button {
+  height: 60px;
   display: flex;
   align-items: center;
   gap: 8px;
-  background-color: 515151; /* Optional: makes the button background transparent */
+  background-color: #515151; /* Optional: makes the button background transparent */
   border-radius: 25px; /* Removes the button border */
   cursor: pointer;
   font-size: 16px;
-  color: #333; /* Text color */
+  color: #ffffff; /* Text color */
 }
 
 .user-profile-button:hover {
