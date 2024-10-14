@@ -64,7 +64,7 @@ button {
 }
 
 .user-profile-button {
-  height: 60px;
+  height: 46px;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -80,8 +80,8 @@ button {
 }
 
 .user-image {
-  width: 40px;
-  height: 40px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
   object-fit: cover;
 }
