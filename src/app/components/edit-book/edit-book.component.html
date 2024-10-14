@@ -1,17 +1,10 @@
 <div class="container">
-    <div class="headtext"><h3>Add Book</h3></div>
+    <div class="headtext"><h3>Edit Book</h3></div>
 
     <div class="input">
-        <!-- input book_name_th -->
         <input class="texin" type="text" [(ngModel)]="book_name_th" placeholder="Enter book name (Thai)"><br>
-
-        <!-- input book_name_en -->
         <input class="texin" type="text" [(ngModel)]="book_name_en" placeholder="Enter book name (English)"><br>
-
-        <!-- input book_name_original -->
         <input class="texin" type="text" [(ngModel)]="book_name_originl" placeholder="Enter original book name"><br>
-
-        <!-- input book_image -->
         <br>
         <label for="file-input" class="image-label">
             <img *ngIf="base64Image" [src]="base64Image" alt="Image preview" class="image-preview" />
@@ -109,7 +102,7 @@
         </div>
 
         <!-- submit -->
-        <button class="button" type="submit" (click)="submit()">Update</button><br><br>
+        <button class="button" type="submit" (click)="submit($event)">Update</button><br><br>
         
         <div *ngIf="noti_succes" class="alert">
             <span class="closebtn" (click)="noti_succes = false;">&times;</span>

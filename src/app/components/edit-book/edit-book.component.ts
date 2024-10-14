@@ -194,7 +194,10 @@ export class EditBookComponent implements OnInit {
     this.book_category = selectedValues;
   }
 
-  async submit() {
+  async submit(event: Event) {
+    event.stopPropagation();
+    const confirmation = confirm("Are you sure you want to update this book?");
+    if (confirmation){
     try {
       await this.getSelectedValues();
       this.bookId = await this.route.snapshot.paramMap.get('id');
@@ -215,7 +218,7 @@ export class EditBookComponent implements OnInit {
     catch{
       this.message = 'Update book faill';
       this.notifyfail();
-    }
+    }}
 
   }
 
