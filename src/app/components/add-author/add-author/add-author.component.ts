@@ -17,9 +17,7 @@ export class AddAuthorComponent {
   author_name:string = '';
   author_description:string = '';
   message:string = '';
-  noti_succes:boolean = false;
-  noti_fail:boolean = false;
-
+  
   onFileChange(event: any) {
     const file = event.target.files[0];
     if (file) {
