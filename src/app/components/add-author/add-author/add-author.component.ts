@@ -34,20 +34,11 @@ export class AddAuthorComponent {
     }
   }
 
-  notifySucces(){
-    this.noti_succes = true;
-    this.noti_fail = false;
-  }
 
-  notifyfail(){
-    this.noti_fail = true;
-    this.noti_succes = false;
-  }
 
   async submit(event: Event){
     if(this.author_name == ''){
       this.message = 'Please fill in all information.';
-      this.notifyfail();
       return;
     }
     event.stopPropagation();
@@ -55,6 +46,6 @@ export class AddAuthorComponent {
     if (confirmation){
     let res = await this.bookService.addAuthor(this.author_name, this.base64Image!, this.author_description);
     this.message = res.message;
-    this.notifySucces();}
+    }
   }
 }

@@ -15,7 +15,6 @@
         </label><br>
         <br>
 
-        <!-- input book_category -->
         <div class="headtext">book category</div>
         <div class="category">
             <div *ngFor="let category of categories" class="checkbox-item">
@@ -24,10 +23,8 @@
             </div>
         </div><br>
 
-        <!-- input book_descriptions -->
         <textarea class="texin" type="text" [(ngModel)]="book_descriptions" placeholder="Enter book descriptions"></textarea><br>
 
-        <!-- input book_status -->
         <div class="headtext">status</div>
         <select id="book_status" [(ngModel)]="book_status" name="book_status">
             <option value="" disabled selected>Select a status</option>
@@ -36,16 +33,12 @@
             <option value="Unknown">Unknown</option>
         </select><br>
 
-
-        <!-- input book_price -->
         <div class="texin" class="headtext">price</div>
         <input class="texin" type="number" [(ngModel)]="book_price" placeholder="Enter book price"><br>
 
-        <!-- input book_pages -->
         <div class="texin" class="headtext">pages</div>
         <input class="texin" type="number" [(ngModel)]="book_pages" placeholder="Enter number of pages"><br>
 
-        <!-- input Language -->
         <div class="headtext">language</div>
         <select id="language" [(ngModel)]="language" name="language">
             <option value="" disabled selected>Select a language</option>
@@ -57,11 +50,9 @@
             <option value="Japanese">Japanese</option>
         </select><br>
 
-        <!-- input release_date -->
         <div class="headtext">release</div>
         <input class="texin"type="date" [(ngModel)]="release_date" placeholder="Select release date"><br>
 
-        <!-- input author -->
         <div class="texin" class="headtext">author</div>
         <select id="author" [(ngModel)]="selectedAuthor" name="author">
             <option value="" disabled selected>Select a author</option>
@@ -70,7 +61,6 @@
             </option>
         </select><br>
 
-        <!-- input publisher -->
         <div *ngIf="userData?.publisher_id === null">
             <div class="headtext">publisher</div>
             <select id="publisher" [(ngModel)]="selectedPublisherId" name="publisher">
@@ -81,7 +71,6 @@
             </select><br>
         </div>
 
-        <!-- input serie -->
         <div class="headtext">serie</div>
         <select id="serie" [(ngModel)]="selectedSerie" name="serie">
             <option value="" disabled selected>Select a serie</option>
@@ -90,7 +79,6 @@
             </option>
         </select><br>
 
-        <!-- linkshop -->
         <div class="texin" class="headtext">Link Shop amount </div>
         <input class="texin" type="number" [(ngModel)]="numberOfLinks" placeholder="Enter number of link" (input)="shop_book()"><br><br>
         <div *ngFor="let link of links; let i = index">
@@ -101,18 +89,7 @@
                 accept="image/*">
         </div>
 
-        <!-- submit -->
         <button class="button" type="submit" (click)="submit($event)">Update</button><br><br>
-        
-        <div *ngIf="noti_succes" class="alert">
-            <span class="closebtn" (click)="noti_succes = false;">&times;</span>
-            Update successful.
-        </div>
-        
-        <div *ngIf="noti_fail" class="alert" style="background-color: #F66358;">
-            <span class="closebtn" (click)="noti_fail = false;">&times;</span>
-            {{message}}
-        </div>
 
     </div>
 

@@ -30,8 +30,6 @@ export class AddBookComponent implements OnInit{
   selectedSerie: string = '';
   selectedAuthor: string = '';
   language:string = '';
-  noti_succes:boolean = false;
-  noti_fail:boolean = false;
 
   message: string = '';
 
@@ -133,16 +131,6 @@ export class AddBookComponent implements OnInit{
     }
   }
 
-  notifySucces(){
-    this.noti_succes = true;
-    this.noti_fail = false;
-  }
-
-  notifyfail(){
-    this.noti_fail = true;
-    this.noti_succes = false;
-  }
-
   getSelectedValues() {
     const selectedValues = this.categories
       .filter(category => category.selected)
@@ -158,7 +146,6 @@ export class AddBookComponent implements OnInit{
       await this.getSelectedValues();
       if(this.release_date == '' || this.language == ''){
         this.message = 'Please fill in complete information.'
-        this.notifyfail();
       }
       let res_addbook = await this.bookService.addBooks(this.book_name_th, this.book_name_en, this.book_name_originl, this.book_category, this.book_descriptions, this.book_status,
         this.book_price, this.book_pages, this.base64Image!, this.release_date, Number(this.selectedPublisherId), Number(this.selectedSerie), this.language, Number(this.selectedAuthor));
@@ -168,13 +155,11 @@ export class AddBookComponent implements OnInit{
         let res_addshop = await this.bookService.addShops(this.links);
         if (res_addshop) {
           this.message = 'Update successful';
-          this.notifySucces();
         }
       }
     }
     catch {
       this.message = "Upload failed. Please try again.";
-      this.notifyfail();
     }}
   }
 

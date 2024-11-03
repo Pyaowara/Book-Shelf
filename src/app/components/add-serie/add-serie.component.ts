@@ -18,18 +18,7 @@ export class AddSerieComponent {
   serie_status: string = '';
   serie_detail:string = '';
   message:string|undefined = '';
-  noti_succes:boolean = false;
-  noti_fail:boolean = false;
 
-  notifySucces(){
-    this.noti_succes = true;
-    this.noti_fail = false;
-  }
-
-  notifyfail(){
-    this.noti_fail = true;
-    this.noti_succes = false;
-  }
   async submit(event: Event){
     event.stopPropagation();
     const confirmation = confirm("Are you sure you want to add this serie?");
@@ -37,16 +26,13 @@ export class AddSerieComponent {
     try{
       if(this.serie_status == '' || this.serie_name_th == '' || this.serie_name_en == '' || this.serie_name_original == ''){
         this.message = 'Please fill in complete information.';
-        this.notifyfail();
         return;
       }
       let res =  await this.bookService.addSerie(this.serie_name_th, this.serie_name_en, this.serie_name_original, this.serie_status, this.serie_detail);
       this.message = await res?.message;
-      this.notifySucces();
     }
     catch{
       this.message = "Upload failed. Please try again.";
-      this.notifySucces();
     }
   }}
 }
