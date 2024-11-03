@@ -18,8 +18,6 @@ export class RephoneComponent implements OnInit{
   confrimePass:string = '';
   userData:UserProfileResponse|null = null;
   message:string|undefined = '';
-  noti_succes:boolean = false;
-  noti_fail:boolean = false;
 
   constructor(private userService: UserService,
               private cookieService: CookieService,
@@ -35,16 +33,6 @@ export class RephoneComponent implements OnInit{
     return !isNaN(number) && Number.isInteger(number);
   }
 
-  notifySucces(){
-    this.noti_succes = true;
-    this.noti_fail = false;
-  }
-
-  notifyfail(){
-    this.noti_fail = true;
-    this.noti_succes = false;
-  }
-
   async update(event: Event){
     if(this.isNumeric(this.newPhone)){
       event.stopPropagation();
@@ -54,13 +42,11 @@ export class RephoneComponent implements OnInit{
         let res = await this.userService.changePhone(this.userData!.user_id, this.newPhone, this.confrimePass);
         this.cookieService.set('userToken', res!.userToken, 30, '/');
         this.message =  res?.message;
-        this.notifySucces();
         window.location.reload();
       }
       catch(err:any){
         console.log('Error:', err);
         this.message = await err.message;
-        this.notifyfail();
       }
     }}
     else{

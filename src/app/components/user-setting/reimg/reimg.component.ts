@@ -18,8 +18,6 @@ export class ReimgComponent implements OnInit{
   confrimePass:string = '';
   userData:UserProfileResponse|null = null;
   message:string|undefined = '';
-  noti_succes:boolean = false;
-  noti_fail:boolean = false;
 
   constructor(private userService: UserService,
               private cookieService: CookieService,
@@ -30,16 +28,6 @@ export class ReimgComponent implements OnInit{
       await this.loadData();
   }
 
-  notifySucces(){
-    this.noti_succes = true;
-    this.noti_fail = false;
-  }
-
-  notifyfail(){
-    this.noti_fail = true;
-    this.noti_succes = false;
-  }
-
   async update(event: Event){
     event.stopPropagation();
     const confirmation = confirm("Are you sure you want to change your profile picture?");
@@ -48,12 +36,10 @@ export class ReimgComponent implements OnInit{
       let res = await this.userService.changeImg(this.userData!.user_id, this.newimg, this.confrimePass);
       await this.cookieService.set('userToken', res!.userToken, 30, '/');
       this.message =  await res?.message;
-      this.notifySucces();
       window.location.reload();
     }
     catch(err:any){
       this.message = await err.message;
-      this.notifyfail();
     }
   }}
 

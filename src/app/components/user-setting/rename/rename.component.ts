@@ -30,16 +30,6 @@ export class RenameComponent implements OnInit{
       await this.loadData();
   }
 
-  notifySucces(){
-    this.noti_succes = true;
-    this.noti_fail = false;
-  }
-
-  notifyfail(){
-    this.noti_fail = true;
-    this.noti_succes = false;
-  }
-
   async update(event: Event) {
     event.stopPropagation();
     const confirmation = confirm("Are you sure you want to update your username?");
@@ -48,12 +38,10 @@ export class RenameComponent implements OnInit{
       let res = await this.userService.changeName(this.userData!.user_id, this.newname, this.confrimePass);
       await this.cookieService.set('userToken', res!.userToken, 30, '/');
       this.message = await res?.message;
-      this.notifySucces();
       window.location.reload();
     } catch (err: any) {
       console.log('Error:', err);
       this.message = await err.message;
-      this.notifyfail();
     }}
   }
 
