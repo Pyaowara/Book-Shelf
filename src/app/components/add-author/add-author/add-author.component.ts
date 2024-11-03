@@ -17,7 +17,7 @@ export class AddAuthorComponent {
   author_name:string = '';
   author_description:string = '';
   message:string = '';
-  
+
   onFileChange(event: any) {
     const file = event.target.files[0];
     if (file) {
@@ -36,14 +36,14 @@ export class AddAuthorComponent {
 
   async submit(event: Event){
     if(this.author_name == ''){
-      this.message = 'Please fill in all information.';
+      this.message =  await 'Please fill in all information.';
       return;
     }
     event.stopPropagation();
     const confirmation = confirm("Are you sure you want to update this book?");
     if (confirmation){
     let res = await this.bookService.addAuthor(this.author_name, this.base64Image!, this.author_description);
-    this.message = res.message;
+    this.message = await res.message;
     }
   }
 }
